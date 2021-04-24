@@ -1,0 +1,53 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-direction-col {
+  flex-direction: column;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.flex-wrap-wrap {
+  flex-wrap: wrap;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.linear-gradient {
+  background-image: linear-gradient(to right, #4452ce, #6744cc);
+}
