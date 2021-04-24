@@ -1,0 +1,50 @@
+$root: '.Dashboard';
+
+#{$root} {
+  &-top {
+    .Logo {
+      margin-bottom: 12px;
+    }
+    &__title {
+      margin-bottom: 24px;
+      span {
+        font-size: 40px;
+        font-weight: bold;
+        &:first-child {
+          color: #4452ce;
+        }
+      }
+    }
+    &__teamLabel {
+      font-size: 24px;
+      line-height: 36px;
+      color: #a9a9a9;
+      max-width: 570px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .HelpCount {
+      margin-bottom: 24px;
+    }
+
+    .JumboButton {
+      margin-bottom: 72px;
+    }
+  }
+  &-bottom {
+    &__categoryHeading {
+      font-size: 30px;
+      color: #4452ce;
+      font-weight: bold;
+      margin-bottom: 32px;
+    }
+    &__categories {
+      max-width: 640px;
+      .JumboButton {
+        width: 292px;
+        margin-bottom: 16px;
+      }
+    }
+  }
+}

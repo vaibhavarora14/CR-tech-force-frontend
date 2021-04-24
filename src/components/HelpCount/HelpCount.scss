@@ -1,0 +1,15 @@
+$root: '.HelpCount';
+
+#{$root} {
+  background-color: #e3ffe9;
+  border-radius: 8px;
+  padding: 8px 22px;
+  font-size: 18px;
+  img {
+    margin-right: 8px;
+  }
+  &-count {
+    font-weight: bold;
+    margin-right: 4px;
+  }
+}
