@@ -1,0 +1,12 @@
+$root: '.SelectInput';
+
+@media only screen and (max-width: 768px) {
+  #{$root} {
+    border: 1px solid #e7e7e7;
+    border-radius: 8px;
+    & > .MuiFormControl-root {
+      min-width: 280px;
+      margin: 12px 16px !important;
+    }
+  }
+}

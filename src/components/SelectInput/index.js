@@ -6,10 +6,12 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
+import './SelectInput.scss';
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 280,
+    // minWidth: 280,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),

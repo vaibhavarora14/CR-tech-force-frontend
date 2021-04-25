@@ -6,6 +6,10 @@ $root: '.Logo';
     height: 60px;
     border-radius: 8px;
     background-color: #4452ce;
+    img {
+      width: 24px;
+      height: 32px;
+    }
   }
   &.inline {
     cursor: pointer;
@@ -26,6 +30,33 @@ $root: '.Logo';
       font-weight: bold;
       &:first-child {
         color: #4452ce;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #{$root} {
+    &-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      img {
+        width: 16px;
+        height: 22px;
+      }
+    }
+    &.inline {
+      .Logo-text {
+        span {
+          font-size: 24px;
+        }
+      }
+    }
+    &-text {
+      margin-bottom: 16px;
+      span {
+        font-size: 24px;
       }
     }
   }

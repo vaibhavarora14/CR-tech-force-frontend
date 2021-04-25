@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
@@ -19,7 +20,7 @@ const TextButton = ({ label, onClick }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.root, 'TextButton')}>
       <Button onClick={onClick}>{label}</Button>
     </div>
   );

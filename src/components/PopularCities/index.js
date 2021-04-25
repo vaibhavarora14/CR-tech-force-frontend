@@ -22,7 +22,7 @@ const PopularCities = () => {
       <div className="PopularCities-title text-align-center">
         POPULAR CITIES
       </div>
-      <div className="d-flex">{cityButtons}</div>
+      <div className="d-flex PopularCities-cities">{cityButtons}</div>
     </div>
   );
 };
