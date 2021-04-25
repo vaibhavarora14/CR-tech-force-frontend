@@ -25,6 +25,7 @@ const SearchBar = () => {
 
   const handleStateChange = (selectedState) => {
     setSelectedState(selectedState);
+    setSelectedCity('');
     const selectedStatData = statesCitiesData.find(
       (state) => state.state === selectedState
     );
@@ -35,8 +36,6 @@ const SearchBar = () => {
       selectedStatData.cities.length > 0
         ? selectedStatData.cities
         : [];
-
-    console.log('citiesData::: ', citiesData);
 
     setCities(citiesData);
   };
