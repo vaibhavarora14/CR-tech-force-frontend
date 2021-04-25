@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 
 function SearchPage() {
 
-  const { loading, data } = useQuery(GET_SEARCH('Haryana', 'Ambala', 'Oxygen'))
+  const { data } = useQuery(GET_SEARCH('Haryana', 'Ambala', 'Oxygen'))
   console.log(data)
 
   return (
@@ -18,7 +18,7 @@ const GET_SEARCH = (state: string, city: string, resourceType: string) => {
   return gql`
     query {
         workspace {
-          tickets(filter: "custom_string:${state} AND custom_string:${city} AND custom_string:${resourceType}") {
+          tickets(filter: "custom_string:'${state}' AND custom_string:'${city}' AND custom_string:'${resourceType}'") {
             edges {
               node {
                 id

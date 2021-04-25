@@ -5,7 +5,7 @@ import Home from './containers'
 import SearchPage from './containers/SearchPage'
 
 const httpLink = createHttpLink({
-    uri: 'https://vz3uy4iya2.execute-api.ap-south-1.amazonaws.com/'
+    uri: 'https://vz3uy4iya2.execute-api.ap-south-1.amazonaws.com/dev/graphql'
 })
 
 const client = new ApolloClient({
