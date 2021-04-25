@@ -6,10 +6,12 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
+import './SelectInput.scss';
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 280,
+    flex: 1,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -31,7 +33,7 @@ const SelectInput = ({ label, placeholder, options, value, onChange }) => {
   ));
 
   return (
-    <div className="SelectInput">
+    <div className="SelectInput d-flex flex-grow-1">
       <FormControl className={classes.formControl}>
         <InputLabel shrink id="demo-simple-select-placeholder-label-label">
           {label}

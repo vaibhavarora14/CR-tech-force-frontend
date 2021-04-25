@@ -3,3 +3,14 @@ $root: '.Header';
 #{$root} {
   padding: 24px 64px;
 }
+
+@media only screen and (max-width: 768px) {
+  #{$root} {
+    &.isHeader {
+      padding: 0;
+    }
+    .JumboButton {
+      display: none;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import SearchIcon from '@material-ui/icons/Search';
 
 import statesCitiesData from './../../utils/state-city-map';
@@ -13,13 +13,12 @@ import SelectInput from './../SelectInput';
 
 import './SearchBar.scss';
 
-const SearchBar = () => {
-  const { searchInputs } = useContext(SearchContext);
-  const [selectedState, setSelectedState] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
-  const [selectedRequirement, setSelectedRequirement] = useState('');
+const SearchBar = ({ history }) => {
+  const { searchInputs, state } = useContext(SearchContext);
+  const [selectedState, setSelectedState] = useState(state.searchInputs ? state.searchInputs.state : '');
+  const [selectedCity, setSelectedCity] = useState(state.searchInputs ? state.searchInputs.city : '');
+  const [selectedRequirement, setSelectedRequirement] = useState(state.searchInputs ? state.searchInputs.requirement : '');
   const [cities, setCities] = useState([]);
-  const [redirectToHome, setRedirectToHome] = useState(false);
 
   const states = statesCitiesData.map((state) => state.state);
 
@@ -32,8 +31,8 @@ const SearchBar = () => {
 
     const citiesData =
       !!selectedStatData &&
-      !!selectedStatData.cities &&
-      selectedStatData.cities.length > 0
+        !!selectedStatData.cities &&
+        selectedStatData.cities.length > 0
         ? selectedStatData.cities
         : [];
 
@@ -49,13 +48,16 @@ const SearchBar = () => {
   };
 
   const handleSubmit = () => {
+    const {
+      location: { pathname },
+    } = history;
     const searchQuery = {
       state: selectedState,
       city: selectedCity,
       requirement: selectedRequirement,
     };
     searchInputs(searchQuery);
-    setRedirectToHome(true);
+    pathname === '/' && history.push(ROUTES.SEARCH);
   };
 
   return (
@@ -87,9 +89,8 @@ const SearchBar = () => {
         icon={<SearchIcon />}
         onClick={handleSubmit}
       />
-      {!!redirectToHome && <Redirect to={ROUTES.SEARCH} />}
     </div>
   );
 };
 
-export default SearchBar;
+export default withRouter(SearchBar);

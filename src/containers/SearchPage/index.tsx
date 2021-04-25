@@ -65,7 +65,7 @@ function SearchPage() {
   return (
     <div>
       <SearchBar />
-      {called && <>
+      {state?.searchInputs && called && <>
         {currentData.length === 0 && <h3>Sorry, No data available</h3>}
         {currentData.length !== 0 && <>
           <Typography color="textSecondary" className="mb-4">Showing {currentData.length} Results</Typography>
