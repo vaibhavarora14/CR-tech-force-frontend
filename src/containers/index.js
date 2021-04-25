@@ -1,6 +1,5 @@
 import React from 'react';
-
-import Header from '../components/Header';
+import './../global/styles/common.scss';
 import Dashboard from './Dashboard';
 
 import './../global/styles/common.scss';
@@ -43,11 +42,11 @@ const theme = createMuiTheme({
 });
 
 
-const App = () => {
+
+const Home = () => {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Header />
         <div className="container">
           <Dashboard />
 
@@ -62,4 +61,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
