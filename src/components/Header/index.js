@@ -1,28 +1,20 @@
 import React from 'react';
-import { withRouter } from 'react-router';
-
+import { useHistory, withRouter } from 'react-router';
+import superheroImg from './../../global/assets/icons/superhero.svg';
 import JumboButton from './../JumboButton';
 import Logo from './../Logo';
-
-import superheroImg from './../../global/assets/icons/superhero.svg';
-
 import './Header.scss';
 
-const Header = (props) => {
-  const {
-    history: {
-      location: { pathname },
-    },
-  } = props;
-  const showLogo = pathname !== '/';
+const Header = () => {
+  const history = useHistory();
+  const showLogo = history.location.pathname !== '/';
 
   return (
     <header
-      className={`Header d-flex justify-content-between ${
-        !!showLogo ? '' : 'justify-content-end'
-      } ${!!showLogo ? '' : 'isHeader'}`}
+      className={`Header d-flex justify-content-between ${!!showLogo ? '' : 'justify-content-end'
+        } ${!!showLogo ? '' : 'isHeader'}`}
     >
-      {!!showLogo && <Logo />}
+      {!!showLogo && <Logo onClick={() => history.push('/')} />}
       <JumboButton
         altText="superhero"
         iconSrc={superheroImg}
