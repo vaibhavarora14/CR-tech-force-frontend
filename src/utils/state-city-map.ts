@@ -1,4 +1,4 @@
-export const StateCityMap = [
+export default [
     {
         state: 'Andhra Pradesh',
         cities: ['Adoni', 'Amaravati', 'Anantapur']
