@@ -27,6 +27,10 @@ $root: '.Dashboard';
     .HelpCount {
       margin-bottom: 56px;
     }
+
+    .PopularCities {
+      margin-bottom: 60px;
+    }
   }
   &-bottom {
     &__categoryHeading {
@@ -39,7 +43,7 @@ $root: '.Dashboard';
       max-width: 640px;
       .JumboButton {
         width: 292px;
-        margin-bottom: 16px;
+        margin: 12px;
       }
     }
   }

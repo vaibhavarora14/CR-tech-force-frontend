@@ -1,10 +1,17 @@
+import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client'
+import { ThemeProvider } from '@material-ui/styles'
+import { createMuiTheme } from '@material-ui/core';
+import './global/styles/common.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './containers'
 import AddResources from './containers/AddResources'
 import SearchPage from './containers/SearchPage'
-import { ThemeProvider } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core';
+import { Provider as SearchProvider } from './context/SearchContext';
+
+const httpLink = createHttpLink({
+  uri: 'https://vz3uy4iya2.execute-api.ap-south-1.amazonaws.com/dev/graphql'
+})
 
 const theme = createMuiTheme({
   palette: {
@@ -40,9 +47,17 @@ const theme = createMuiTheme({
   }
 });
 
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache()
+})
+
 function App() {
-    return (
-        <div className="App">
+  return (
+    <ApolloProvider client={client}>
+      <SearchProvider>
+        <ThemeProvider theme={theme}>
+          <div className="App">
             <BrowserRouter>
                 <ThemeProvider theme={theme}>
                     <Header />
@@ -56,8 +71,11 @@ function App() {
                     </div>
                 </ThemeProvider>
             </BrowserRouter>
-        </div>
-    )
+          </div>
+        </ThemeProvider>
+      </SearchProvider>
+    </ApolloProvider>
+  )
 }
 
 export default App
