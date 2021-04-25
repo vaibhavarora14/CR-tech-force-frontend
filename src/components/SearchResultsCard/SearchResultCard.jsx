@@ -1,4 +1,4 @@
-import { Badge, Button, Card, CardHeader, IconButton, SvgIcon, Typography, withStyles, withTheme } from '@material-ui/core';
+import { Badge, Button, Card, IconButton, Typography, withStyles, withTheme } from '@material-ui/core';
 import React, {Component} from 'react';
 import GreenTick from '../GreenTick/GreenTick';
 import ThumbsUp from '../../global/assets/icons/thumsup.svg';

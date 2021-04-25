@@ -3,7 +3,6 @@ import './../global/styles/common.scss';
 import Dashboard from './Dashboard';
 
 import './../global/styles/common.scss';
-import SearchResults from './SearchResults';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core';
 
