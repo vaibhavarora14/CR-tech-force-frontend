@@ -6,16 +6,16 @@ import SearchPage from './containers/SearchPage'
 function App() {
     return (
         <div className="App">
-            <Header />
-            <div className="container">
-                <BrowserRouter>
+            <BrowserRouter>
+                <Header />
+                <div className="container">
                     <Switch>
                         <Route exact path="/home" component={Home} />
                         <Route exact path="/search" component={SearchPage} />
                         <Route exact path="/" component={Home} />
                     </Switch>
-                </BrowserRouter>
-            </div>
+                </div>
+            </BrowserRouter>
         </div>
     )
 }
