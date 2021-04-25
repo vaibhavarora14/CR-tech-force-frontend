@@ -1,5 +1,11 @@
-import React from 'react';
-import TextButton from '../TextButton';
+import React, { useContext } from 'react';
+import { withRouter } from 'react-router';
+
+import ROUTES from './../../constants/routes';
+
+import { Context as SearchContext } from './../../context/SearchContext';
+
+import TextButton from './../TextButton';
 
 import './PopularCities.scss';
 
@@ -13,10 +19,24 @@ const popularCities = [
   'Mumbai',
 ];
 
-const PopularCities = () => {
+const PopularCities = (props) => {
+  const { searchInputs } = useContext(SearchContext);
+  const { history } = props;
+
   const cityButtons = popularCities.map((city) => (
-    <TextButton key={city} label={city} />
+    <TextButton key={city} label={city} onClick={() => handleSubmit(city)} />
   ));
+
+  const handleSubmit = (city) => {
+    const searchQuery = {
+      state: '',
+      city,
+      requirement: '',
+    };
+    searchInputs(searchQuery);
+    history.push(ROUTES.SEARCH);
+  };
+
   return (
     <div className="PopularCities">
       <div className="PopularCities-title text-align-center">
@@ -27,4 +47,4 @@ const PopularCities = () => {
   );
 };
 
-export default PopularCities;
+export default withRouter(PopularCities);
