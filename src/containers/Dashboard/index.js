@@ -60,12 +60,6 @@ const Dashboard = () => {
           related to all Covid needs.
         </div>
         <HelpCount count={823} />
-        <JumboButton
-          altText="superhero"
-          iconSrc={superheroImg}
-          primaryText="Be a Superhero!"
-          secondaryText="Click here to submit leads"
-        />
       </section>
       <section className="Dashboard-bottom"></section>
       <div className="Dashboard-bottom">
