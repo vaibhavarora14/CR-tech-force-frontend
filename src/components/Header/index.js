@@ -8,6 +8,7 @@ import './Header.scss';
 const Header = () => {
   const history = useHistory();
   const showLogo = history.location.pathname !== '/';
+  const showSuperheroButton = history.location.pathname !== '/addResources';
 
   return (
     <header
@@ -15,12 +16,13 @@ const Header = () => {
         } ${!!showLogo ? '' : 'isHeader'}`}
     >
       {!!showLogo && <Logo onClick={() => history.push('/')} />}
-      <JumboButton
+      {showSuperheroButton && <JumboButton
         altText="superhero"
         iconSrc={superheroImg}
         primaryText="Be a Superhero!"
         secondaryText="Click here to submit info"
-      />
+        onClick={() => history.push('/addResources')}
+      />}
     </header>
   );
 };
