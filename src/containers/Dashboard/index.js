@@ -3,7 +3,10 @@ import React from 'react';
 import HelpCount from './../../components/HelpCount';
 import JumboButton from './../../components/JumboButton';
 import Logo from './../../components/Logo';
+import PopularCities from './../../components/PopularCities';
+import SearchBar from './../../components/SearchBar';
 
+import bedImg from './../../global/assets/icons/bed.svg';
 import hospitalImg from './../../global/assets/icons/hospital.svg';
 import medicineImg from './../../global/assets/icons/medicine.svg';
 import oxygenImg from './../../global/assets/icons/oxygen.svg';
@@ -15,26 +18,32 @@ const categoryData = [
   {
     id: 'hospital',
     imgSrc: hospitalImg,
-    primaryText: 'Hospital Beds',
-    secondaryText: 'ICU Beds, Oxygen Beds etc',
+    primaryText: 'ICU Beds',
+    secondaryText: 'Click here to find beds in your location',
+  },
+  {
+    id: 'bed',
+    imgSrc: bedImg,
+    primaryText: 'Oxygen Beds',
+    secondaryText: 'Click here to find beds in your location',
   },
   {
     id: 'oxygen',
     imgSrc: oxygenImg,
     primaryText: 'Oxygen Supplies',
-    secondaryText: 'Cylinders, Refillers etc',
+    secondaryText: 'Find cylinders, refillers in your locality',
   },
   {
     id: 'medicine',
     imgSrc: medicineImg,
     primaryText: 'Medicines / Remdesivir',
-    secondaryText: 'ICU Beds, Oxygen Beds etc',
+    secondaryText: 'Find medicines in your area',
   },
   {
     id: 'tiffin',
     imgSrc: tiffinImg,
     primaryText: 'Tiffin Services',
-    secondaryText: 'Cylinders, Refillers etc',
+    secondaryText: 'Get food delivered at your doorsteps',
   },
 ];
 
@@ -59,16 +68,17 @@ const Dashboard = () => {
           related to all Covid needs.
         </div>
         <HelpCount count={823} />
+        <SearchBar />
+        <PopularCities />
       </section>
-      <section className="Dashboard-bottom"></section>
-      <div className="Dashboard-bottom">
+      <section className="Dashboard-bottom">
         <div className="Dashboard-bottom__categoryHeading text-align-center">
           What are you looking for
         </div>
-        <div className="Dashboard-bottom__categories d-flex flex-wrap-wrap justify-content-between">
+        <div className="Dashboard-bottom__categories d-flex flex-wrap-wrap justify-content-center">
           {categories}
         </div>
-      </div>
+      </section>
     </div>
   );
 };
