@@ -7,7 +7,6 @@ import Logo from './../../components/Logo';
 import hospitalImg from './../../global/assets/icons/hospital.svg';
 import medicineImg from './../../global/assets/icons/medicine.svg';
 import oxygenImg from './../../global/assets/icons/oxygen.svg';
-import superheroImg from './../../global/assets/icons/superhero.svg';
 import tiffinImg from './../../global/assets/icons/tiffin.svg';
 
 import './Dashboard.scss';
@@ -54,22 +53,12 @@ const Dashboard = () => {
   return (
     <div className="Dashboard d-flex flex-direction-col align-items-center">
       <section className="Dashboard-top d-flex flex-direction-col align-items-center">
-        <Logo />
-        <div className="Dashboard-top__title d-flex justify-content-center">
-          <span className="first">Covid</span>
-          <span className="second">Resources.in</span>
-        </div>
+        <Logo isInline={false} />
         <div className="Dashboard-top__teamLabel">
           We’re a team of volunteers, working 24x7 to find you verified leads
           related to all Covid needs.
         </div>
         <HelpCount count={823} />
-        <JumboButton
-          altText="superhero"
-          iconSrc={superheroImg}
-          primaryText="Be a Superhero!"
-          secondaryText="Click here to submit leads"
-        />
       </section>
       <section className="Dashboard-bottom"></section>
       <div className="Dashboard-bottom">
