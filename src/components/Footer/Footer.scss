@@ -20,25 +20,9 @@ $root: ".footer";
       &-textContainer {
         padding-right: 80px;
       }
-      &-title {
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 40px;
-        line-height: 147.5%;
-        letter-spacing: 0.005em;
-        color: #FFFFFF;
-        margin: 0;
-      }
       &-description {
         &-item {
-          font-family: Roboto;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 16px;
-          line-height: 22px;
           color: rgba(255, 255, 255, 0.6);
-          margin-bottom: 20px;
         }
       }
     }
@@ -60,7 +44,6 @@ $root: ".footer";
         &-title {
           padding-left: 54px;
           padding-right: 54px;
-          padding-bottom: 24px;
         }
         &-photoContainer {
           margin-bottom: 16px;
@@ -68,10 +51,6 @@ $root: ".footer";
         &-textContainer {
           padding-right: 36px;
           padding-left: 36px;
-        }
-        &-title {
-          font-size: 24px;
-          line-height: 31px;
         }
       }
       &-links {

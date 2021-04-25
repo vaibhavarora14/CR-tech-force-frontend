@@ -1,4 +1,5 @@
 import React from 'react';
+import { Typography } from '@material-ui/core';
 
 import superheroImg from '../../global/assets/icons/superhero.svg';
 import FooterButton from '../FooterButton'
@@ -52,7 +53,7 @@ const Footer = () => {
     ));
   
     const footerText = footerDescriptionData.map(({ id, text }) => (
-      <div className="footer__container-superhero-description-item" key={id}>{text}</div>
+      <Typography color="secondary" gutterBottom className="footer__container-superhero-description-item" key={id}>{text}</Typography>
     ))
     return (
         <footer className="footer d-flex flex-wrap-wrap justify-content-center">
@@ -62,7 +63,7 @@ const Footer = () => {
                         <img src={superheroImg} alt="Superhero icon" className="footer__container-superhero-photo" />
                     </div>
                     <div className="footer__container-superhero-textContainer">
-                      <h1 className="footer__container-superhero-title">Be a Superhero! Join forces</h1>
+                      <Typography gutterBottom variant="h5" color="secondary" className="footer__container-superhero-title">Be a Superhero! Join forces</Typography>
                       <div className="footer__container-superhero-description">
                           {footerText}
                       </div>
