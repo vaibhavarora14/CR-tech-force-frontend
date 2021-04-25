@@ -1,9 +1,10 @@
-import { Button, MenuItem, TextField, Typography, withStyles, withTheme } from '@material-ui/core'
+import { Button, Dialog, makeStyles, MenuItem, TextField, Typography, withTheme } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab';
-import React, {Component} from 'react'
-import { isTypeNode } from 'typescript';
+import React, {useState} from 'react'
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/client';
 
-const styles = theme => ({
+const useStyles = makeStyles( theme => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
@@ -27,11 +28,11 @@ const styles = theme => ({
         marginTop: theme.spacing(7),
         
         '& > *': {
-            marginBottom: theme.spacing(1),
+            marginBottom: theme.spacing(2),
         },
         alignItems: 'center'
     }
-})
+}));
 
 const states = [
     'Andhra Pradesh',
@@ -686,7 +687,7 @@ const resourceSubtypes = {
 }
 
 
-const ADD_TICKET = gql`
+const CREATE_TICKET = gql`
   mutation(
     $state: String
     $city: String
@@ -706,9 +707,9 @@ const ADD_TICKET = gql`
         supplierDonorName: $supplierDonorName,
         supplierDonorContactNumber: $supplierDonorContactNumber,
         resourceType: $resourceType,
+        subResourceType: $subResourceType,
         costPerUnit: $costPerUnit,
         availableUnits: $availableUnits,
-        subResourceType: $subResourceType,
         otherInfo: $otherInfo
     }) {
       status
@@ -717,140 +718,184 @@ const ADD_TICKET = gql`
 `;
 
 
-class AddResources extends Component {
+const AddResources = (props) => {
 
-    state = {
-        city: '',
-        state: '',
-        location: '',
-        resource_type: '',
-        resource_subtype: '',
-        availability: null,
-        cost_per_unit: null,
-        contact_number: null,
-        contact_name: null,
-        lead_source: null,
+    const classes = useStyles()
 
-        cityError: false,
-        stateError: false,
-        resourceError: false,
-        subResourceError: false,
-        nameError: false,
-        numberError: false,
+    const {theme} = props;
+
+    const [city, setCity] = useState('')
+    const [state, setState] = useState('')
+    const [location, setLocation] = useState('')
+    const [resource_type, setResourceType] = useState('')
+    const [resource_subtype, setResourceSubtype] = useState('')
+    const [availability, setAvailability] = useState(null)
+    const [cost_per_unit, setCostPerUnit] = useState(null)
+    const [contact_name, setContactName] = useState(null)
+    const [contact_number, setContactNumber] = useState(null)
+    const [lead_source, setLeadSource] = useState(null)
+
+    const [cityError, setCityError] = useState(false)
+    const [stateError, setStateError] = useState(false)
+    const [resourceError, setResourceError] = useState(false)
+    const [subResourceError, setSubResourceError] = useState(false)
+    const [nameError, setNameError] = useState(false)
+    const [numberError, setNumberError] = useState(false)
+
+    const [dialogOpen, setDialogOpen] = useState(false)
+    const [dialogMessage, setDialogMessage] = useState('')
+
+    const [createTicket] = useMutation(CREATE_TICKET, {
+        variables: {
+            state,
+            city,
+            address: location,
+            supplierDonorName: contact_name,
+            supplierDonorContactNumber: contact_number,
+            resourceType: resource_type,
+            subResourceType: resource_subtype,
+            costPerUnit: cost_per_unit,
+            availableUnits: availability,
+            otherInfo: lead_source
+        },
+        update(proxy, result) {
+            console.log(result)
+            if (result && result.data && result.data.createTicket && result.data.createTicket.status === "200") {
+            // 
+                setDialogMessage("Resource Uploaded Successfully")
+                setDialogOpen(true)
+            } else {
+                setDialogMessage("Error uploading resource, Please try again later.")
+                setDialogOpen(true)   
+            }
+        },
+        onError(err) {
+            setDialogMessage("Error uploading resource, Please try again later.")
+            setDialogOpen(true)
+        }
+    })
+
+
+
+    const checkDataAndSubmit = () => {
+        let error = false;
+
+        if (!city) {setCityError(true); error = true }
+        if (!state) {setStateError(true); error = true } 
+        if (!resource_type) {setResourceError(true); error = true } 
+        if (!resource_subtype) {setSubResourceError(true); error = true } 
+        if (!contact_name) {setNameError(true); error = true }
+        if (!contact_number) {setNumberError(true); error = true }
+
+        if (!error)
+            createTicket()
     }
+        
+    return (
+        <>
+        <div className={classes.root}>
+            <div className={classes.headingRoot}>
+                <Typography variant='h5'>Add Verified Information</Typography>
+                <Typography variant='body1' style={{marginTop: theme.spacing(3), opacity: 0.6, maxWidth: theme.spacing(67.75)}}>
+                    Every information / lead suggested by you could end up saving someon’e life. We sincerely thank you from the bottom of our hearts. Please fill the form below to add information.Our team of volunteers will verify the details before publishing.
+                </Typography>
+            </div>
+            <div className={classes.formRoot}>
+                <Autocomplete
+                    options={states}
+                    getOptionLabel={(option) => option}
+                    style={{width: '100%'}}
+                    onChange={(event, state) => setState(state) || setCity('') || setStateError(false) || setCityError(false)}
+                    renderInput={(params) => <TextField autoComplete='off' {...params} error={stateError} label="State" variant="outlined" required />}
+                    />
+
+                <Autocomplete
+                    options={ cities[state] || []}
+                    disabled={state in cities ? false : true}
+                    getOptionLabel={(option) => option}
+                    style={{width: '100%'}}
+                    onChange={(event, city) => setCity(city) || setCityError(false)}
+                    renderInput={(params) => <TextField autoComplete='off' {...params} error={cityError} label="City" variant="outlined" required/>}
+                    />
+
+                <TextField style={{width: '100%'}} variant='outlined' rows={5} label='Address' multiline value={location} onChange={(e) => setLocation(e.target.value)} />
+
+                <TextField
+                    select
+                    error={resourceError}
+                    style={{width: '100%'}}
+                    variant='outlined'
+                    value={resource_type}
+                    label='Resource Type'
+                    onChange={(event) => setResourceType(event.target.value) || setResourceError(false) || setResourceSubtype('') || setSubResourceError(false)}
+                    >
+                        {resourceTypes.map(type => (
+                            <MenuItem value={type} key={type}>
+                                {type}
+                            </MenuItem>
+                        ))}
+                </TextField>
 
 
-    checkDataAndSubmit() {
-        const {city, state, location, resource_type, resource_subtype, availability, cost_per_unit, contact_number, contact_name, lead_source} = this.state;
-        if (!city) this.setState({cityError: true})
-        if (!state) this.setState({stateError: true})
-        if (!resource_type) this.setState({resourceError: true})
-        if (!resource_subtype) this.setState({subResourceError: true})
-        if (!contact_name) this.setState({nameError: true})
-        if (!contact_number) this.setState({numberError: true})
-    }
-
-    render() {
-        const {classes, theme} = this.props;
-        const {city, state, location, resource_type, resource_subtype, availability, cost_per_unit, contact_number, contact_name, lead_source, cityError, stateError, resourceError, subResourceError, nameError, numberError} = this.state;
-        return (
-            <div className={classes.root}>
-                <div className={classes.headingRoot}>
-                    <Typography variant='h5'>Add Verified Information</Typography>
-                    <Typography variant='body1' style={{marginTop: theme.spacing(3), opacity: 0.6, maxWidth: theme.spacing(67.75)}}>
-                        Every information / lead suggested by you could end up saving someon’e life. We sincerely thank you from the bottom of our hearts. Please fill the form below to add information.Our team of volunteers will verify the details before publishing.
-                    </Typography>
-                </div>
-                <div className={classes.formRoot}>
-                    <Autocomplete
-                        options={states}
-                        getOptionLabel={(option) => option}
-                        style={{width: '100%'}}
-                        onChange={(event, state) => this.setState({state, city: '', cityError: false, stateError: false})}
-                        renderInput={(params) => <TextField {...params} error={stateError} label="State" variant="outlined" required />}
-                        />
-
-                    <Autocomplete
-                        options={ cities[state] || []}
-                        disabled={state in cities ? false : true}
-                        getOptionLabel={(option) => option}
-                        style={{width: '100%'}}
-                        onChange={(event, city) => this.setState({city, cityError: false})}
-                        renderInput={(params) => <TextField {...params} error={cityError} label="City" variant="outlined" required/>}
-                        />
-
-                    <TextField style={{width: '100%'}} variant='outlined' rows={5} label='Address' multiline value={location} onChange={(e) => this.setState({location: e.target.value})} />
-
-                    <TextField
-                        select
-                        
-                        error={resourceError}
-                        style={{width: '100%'}}
-                        variant='outlined'
-                        value={resource_type}
-                        label='Resource Type'
-                        onChange={(event) => this.setState({resource_type: event.target.value})}
-                        >
-                            {resourceTypes.map(type => (
-                                <MenuItem value={type} key={type}>
-                                    {type}
-                                </MenuItem>
-                            ))}
-                    </TextField>
+                <TextField
+                    select
+                    error={subResourceError}
+                    variant='outlined'
+                    style={{width: '100%'}}
+                    value={resource_subtype}
+                    disabled={resource_type.length ? false : true}
+                    label='Resource Subtype'
+                    onChange={(event) =>  setResourceSubtype(event.target.value) || setSubResourceError(false)}
+                    >
+                        {resource_type.length ? resourceSubtypes[resource_type].map(type => (
+                            <MenuItem value={type} key={type}>
+                                {type}
+                            </MenuItem>
+                        )) : null}
+                </TextField>
 
 
-                    <TextField
-                        select
-                        error={subResourceError}
-                        variant='outlined'
-                        style={{width: '100%'}}
-                        value={resource_subtype}
-                        disabled={resource_type.length ? false : true}
-                        label='Resource Subtype'
-                        onChange={(event) => this.setState({resource_subtype: event.target.value, resourceError: false, subResourceError: false})}
-                        >
-                            {resource_type.length ? resourceSubtypes[resource_type].map(type => (
-                                <MenuItem value={type} key={type}>
-                                    {type}
-                                </MenuItem>
-                            )) : null}
-                    </TextField>
+                <TextField
+                    select
+                    variant='outlined'
+                    style={{width: '100%'}}
+                    value={availability}
+                    label='Availability'
+                    disabled={resource_type === 'Blood' || resource_type === 'Food / Tiffin'}
+                    onChange={(event) => setAvailability(event.target.value)}
+                    >
+                            <MenuItem value={'Availabel'} key={'Available'}>
+                                {'Available'}
+                            </MenuItem>
+
+                            <MenuItem value={'Unavailable'} key={'Unavailable'}>
+                                {'Unavailable'}
+                            </MenuItem>
+                </TextField>
 
 
-                    <TextField
-                        select
-                        
-                        variant='outlined'
-                        style={{width: '100%'}}
-                        value={availability}
-                        label='Availability'
-                        disabled={resource_type === 'Blood' || resource_type === 'Food / Tiffin'}
-                        onChange={(event) => this.setState({availability: event.target.value, subResourceError: false})}
-                        >
-                                <MenuItem value={false} key={'Available'}>
-                                    {'Available'}
-                                </MenuItem>
-
-                                <MenuItem value={true} key={'Unavailable'}>
-                                    {'Unavailable'}
-                                </MenuItem>
-                    </TextField>
+                <TextField style={{width: '100%'}} variant='outlined' label='Cost per Unit (in ₹)' type='number' value={cost_per_unit} onChange={(e) => setCostPerUnit(e.target.value)} />
+                    <TextField style={{width: '100%'}} error={nameError} variant='outlined' required label='Contact Name' value={contact_name} onChange={(e) => setContactName(e.target.value) || setNameError(false)} />
+                    <TextField style={{width: '100%'}} error={numberError} variant='outlined' required label='Phone Number' type='phone' value={contact_number} onChange={(e) => setContactNumber(e.target.value) || setNumberError(false)} />
+                    <TextField style={{width: '100%'}} variant='outlined' label='Lead Source' value={lead_source} onChange={(e) => setLeadSource(e.target.value)} />
 
 
-                    <TextField style={{width: '100%'}} variant='outlined' label='Cost per Unit (in ₹)' type='number' value={cost_per_unit} onChange={(e) => this.setState({cost_per_unit: e.target.value})} />
-                    <TextField style={{width: '100%'}} error={nameError} variant='outlined' required label='Contact Name' value={contact_name} onChange={(e) => this.setState({contact_name: e.target.value, nameError: false})} />
-                    <TextField style={{width: '100%'}} error={numberError} variant='outlined' required label='Phone Number' type='phone' value={contact_number} onChange={(e) => this.setState({contact_number: e.target.value, numberError: false})} />
-                    <TextField style={{width: '100%'}} variant='outlined' label='Lead Source' value={lead_source} onChange={(e) => this.setState({lead_source: e.target.value})} />
-
-
-                    <Button onClick={() => this.checkDataAndSubmit()} style={{marginTop: theme.spacing(2), width: theme.spacing(20), display: 'flex', justifyContent: 'center', alignItems: 'center'}} variant='contained' color='primary'>
+                    <Button onClick={() => checkDataAndSubmit()} style={{marginTop: theme.spacing(2), width: theme.spacing(20), display: 'flex', justifyContent: 'center', alignItems: 'center'}} variant='contained' color='primary'>
                         Submit
                     </Button>
                     
                 </div>
             </div>
+            
+            <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} style={{padding: '56px', alignItems: 'center'}}>
+                <Typography variant='h4'>
+                    {dialogMessage}
+                </Typography>
+            </Dialog>
+                            
+
+            </>
         )
-    }
 }
 
-export default withTheme(withStyles(styles)(AddResources));
+export default withTheme(AddResources);
