@@ -54,11 +54,7 @@ const Dashboard = () => {
   return (
     <div className="Dashboard d-flex flex-direction-col align-items-center">
       <section className="Dashboard-top d-flex flex-direction-col align-items-center">
-        <Logo />
-        <div className="Dashboard-top__title d-flex justify-content-center">
-          <span className="first">Covid</span>
-          <span className="second">Resources.in</span>
-        </div>
+        <Logo isInline={false} />
         <div className="Dashboard-top__teamLabel">
           We’re a team of volunteers, working 24x7 to find you verified leads
           related to all Covid needs.
