@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '8px',
     textTransform: 'capitalize',
     padding: '10px 22px 10px 18px',
+    justifyContent: 'flex-start',
   },
 }));
 
