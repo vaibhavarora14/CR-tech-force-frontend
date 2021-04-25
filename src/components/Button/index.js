@@ -14,16 +14,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Button = ({ label, icon }) => {
+const Button = ({ icon, disabled = false, label, onClick = () => {} }) => {
   const classes = useStyles();
 
   return (
     <MaterialUIButton
       variant="contained"
       color="primary"
+      disabled={disabled}
       size="large"
       className={clsx(classes.button, 'Button linear-gradient')}
       startIcon={icon}
+      onClick={onClick}
     >
       {label}
     </MaterialUIButton>

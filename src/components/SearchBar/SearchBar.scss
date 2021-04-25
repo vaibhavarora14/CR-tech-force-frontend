@@ -8,7 +8,7 @@ $root: '.SearchBar';
   padding: 4px 0 0 16px;
   position: relative;
   margin-bottom: 40px;
-  margin-left: -146px;
+  margin-left: -170px;
   .SelectInput {
     margin-left: 16px;
     &:first-child {
@@ -24,12 +24,14 @@ $root: '.SearchBar';
     }
   }
   .Button {
+    font-size: 20px;
+    font-weight: 500;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     position: absolute;
     height: calc(100% + 2px);
     top: -1px;
-    right: -145px;
+    right: -170px;
     box-shadow: none;
   }
 }

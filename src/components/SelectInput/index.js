@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -21,13 +21,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SelectInput = ({ label, placeholder, options, value }) => {
+const SelectInput = ({ label, placeholder, options, value, onChange }) => {
   const classes = useStyles();
-  const [age, setAge] = useState('');
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const optionsData = options.map((option, index) => (
+    <MenuItem key={index} value={option}>
+      {option}
+    </MenuItem>
+  ));
 
   return (
     <div className="SelectInput">
@@ -39,8 +40,8 @@ const SelectInput = ({ label, placeholder, options, value }) => {
           disableUnderline
           labelId="demo-simple-select-placeholder-label-label"
           id="demo-simple-select-placeholder-label"
-          value={age}
-          onChange={handleChange}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
           displayEmpty
           className={classes.selectEmpty}
           IconComponent={() => (
@@ -57,9 +58,7 @@ const SelectInput = ({ label, placeholder, options, value }) => {
           <MenuItem value="">
             <span>{placeholder}</span>
           </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {optionsData}
         </Select>
       </FormControl>
     </div>
