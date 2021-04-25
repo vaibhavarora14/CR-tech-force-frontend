@@ -64,7 +64,7 @@ const SearchResultCard = (props) => {
     const classes = useStyles();
     const { title, lastVerified, phone, location, details, thumbsUpcount, thumbsDownCount, theme } = props;
     return (
-        <div className={classes.container}>
+        <div className={`${classes.container} ${props.className || ''}`}>
             <Card variant='outlined' className={classes.root}>
                 <div className={classes.cardHeader}>
                     <div style={{display: 'flex'}}>
