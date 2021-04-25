@@ -7,7 +7,6 @@ import Logo from './../../components/Logo';
 import hospitalImg from './../../global/assets/icons/hospital.svg';
 import medicineImg from './../../global/assets/icons/medicine.svg';
 import oxygenImg from './../../global/assets/icons/oxygen.svg';
-import superheroImg from './../../global/assets/icons/superhero.svg';
 import tiffinImg from './../../global/assets/icons/tiffin.svg';
 
 import './Dashboard.scss';

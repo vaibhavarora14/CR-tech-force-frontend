@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'capitalize',
     padding: '10px 22px 10px 18px',
   },
-  label: {},
 }));
 
 const JumboButton = ({ altText, iconSrc, primaryText, secondaryText }) => {
