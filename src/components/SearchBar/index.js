@@ -14,10 +14,10 @@ import SelectInput from './../SelectInput';
 import './SearchBar.scss';
 
 const SearchBar = ({ history }) => {
-  const { searchInputs } = useContext(SearchContext);
-  const [selectedState, setSelectedState] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
-  const [selectedRequirement, setSelectedRequirement] = useState('');
+  const { searchInputs, state } = useContext(SearchContext);
+  const [selectedState, setSelectedState] = useState(state.searchInputs ? state.searchInputs.state : '');
+  const [selectedCity, setSelectedCity] = useState(state.searchInputs ? state.searchInputs.city : '');
+  const [selectedRequirement, setSelectedRequirement] = useState(state.searchInputs ? state.searchInputs.requirement : '');
   const [cities, setCities] = useState([]);
 
   const states = statesCitiesData.map((state) => state.state);
@@ -31,8 +31,8 @@ const SearchBar = ({ history }) => {
 
     const citiesData =
       !!selectedStatData &&
-      !!selectedStatData.cities &&
-      selectedStatData.cities.length > 0
+        !!selectedStatData.cities &&
+        selectedStatData.cities.length > 0
         ? selectedStatData.cities
         : [];
 
