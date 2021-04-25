@@ -1,7 +1,7 @@
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core';
-import './../global/styles/common.scss';
+import './global/styles/common.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './containers'

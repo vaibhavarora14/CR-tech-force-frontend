@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import { useMutation, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
+import React, { useContext } from 'react';
+import SearchResultCard from '../../components/SearchResultsCard/SearchResultCard';
 import { Context as SearchContext } from './../../context/SearchContext';
 
-import SearchResultCard from '../../components/SearchResultsCard/SearchResultCard';
 
 function SearchPage() {
   const { state } = useContext(SearchContext);
