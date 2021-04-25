@@ -1,5 +1,5 @@
-import { Badge, Button, Card, IconButton, makeStyles, Typography, withStyles, withTheme } from '@material-ui/core';
-import React, {Component} from 'react';
+import { Badge, Button, Card, IconButton, makeStyles, Typography, withTheme } from '@material-ui/core';
+import React from 'react';
 import GreenTick from '../GreenTick/GreenTick';
 import ThumbsUp from '../../global/assets/icons/thumsup.svg';
 import ThumbsDown from '../../global/assets/icons/thumbsdown.svg';
