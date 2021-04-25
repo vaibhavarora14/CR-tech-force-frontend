@@ -1,9 +1,10 @@
 import React from 'react'
+import SearchResultCard from '../../components/SearchResultsCard/SearchResultCard'
 
 function SearchPage() {
     return (
         <h3>
-            Search Page (coming soon...)
+            <SearchResultCard />
         </h3>
     )
 }

@@ -106,7 +106,7 @@ class SearchResultCard extends Component {
                         <div className={classes.thumbsUp}>
                             <IconButton style={{background: '#cccccc'}}>
                                 <Badge classes={{badge: classes.badge}} color='secondary' badgeContent={thumbsUpcount}>
-                                    <img src={ThumbsUp} />
+                                    <img src={ThumbsUp} alt={"thumbs up"} />
                                 </Badge>
                             </IconButton>
                             <Typography style={{opacity: 0.7, marginTop: theme.spacing(0.25)}} variant='subtitle2'>Yes</Typography>
@@ -114,7 +114,7 @@ class SearchResultCard extends Component {
                         <div className={classes.thumbsDown}>
                             <IconButton style={{background: '#cccccc'}}>
                                 <Badge classes={{badge: classes.badge}} color='secondary' badgeContent={thumbsDownCount}>
-                                    <img src={ThumbsDown} />
+                                    <img src={ThumbsDown} alt={"thumbs down"} />
                                 </Badge>
                             </IconButton>
                             <Typography style={{opacity: 0.7, marginTop: theme.spacing(0.25)}} variant='subtitle2'>No</Typography>
