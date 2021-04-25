@@ -5,6 +5,7 @@ import './global/styles/common.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './containers'
+import AddResources from './containers/AddResources'
 import SearchPage from './containers/SearchPage'
 import { Provider as SearchProvider } from './context/SearchContext';
 
@@ -34,7 +35,7 @@ const theme = createMuiTheme({
         boxShadow: 'none',
         borderRadius: '8px',
       }
-    },
+    }, 
     MuiTypography: {
       h6: {
         fontSize: '18px',
@@ -58,13 +59,17 @@ function App() {
         <ThemeProvider theme={theme}>
           <div className="App">
             <BrowserRouter>
-              <Header />
-              <div className="container">
-                <Switch>
-                  <Route exact path="/search" component={SearchPage} />
-                  <Route exact path="/" component={Home} />
-                </Switch>
-              </div>
+                <ThemeProvider theme={theme}>
+                    <Header />
+                    <div className="container">
+                        <Switch>
+                            <Route exact path="/addResources" component={AddResources} />
+                            <Route exact path="/home" component={Home} />
+                            <Route exact path="/search" component={SearchPage} />
+                            <Route exact path="/" component={Home} />
+                        </Switch>
+                    </div>
+                </ThemeProvider>
             </BrowserRouter>
           </div>
         </ThemeProvider>
