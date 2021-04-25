@@ -33,5 +33,36 @@ $root: '.SearchBar';
     top: -1px;
     right: -170px;
     box-shadow: none;
+    &.Mui-disabled {
+      opacity: 0.75;
+      color: #fff;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #{$root} {
+    border: none;
+    border-right: none;
+    padding: 0;
+    position: initial;
+    margin-left: initial;
+    flex-direction: column;
+    .SelectInput {
+      margin-left: 0;
+      margin-bottom: 8px;
+      &::after {
+        display: none;
+      }
+    }
+    .Button {
+      font-size: 16px;
+      border-radius: 8px;
+      position: initial;
+      height: 48px;
+      top: initial;
+      right: initial;
+      justify-content: center;
+    }
   }
 }

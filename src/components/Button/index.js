@@ -1,7 +1,7 @@
 import React from 'react';
+import clsx from 'clsx';
 import MaterialUIButton from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 
 import './Button.scss';
 

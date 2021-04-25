@@ -20,7 +20,7 @@ const Header = (props) => {
     <header
       className={`Header d-flex justify-content-between ${
         !!showLogo ? '' : 'justify-content-end'
-      }`}
+      } ${!!showLogo ? '' : 'isHeader'}`}
     >
       {!!showLogo && <Logo />}
       <JumboButton
