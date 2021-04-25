@@ -3,6 +3,7 @@ import React from 'react';
 import HelpCount from './../../components/HelpCount';
 import JumboButton from './../../components/JumboButton';
 import Logo from './../../components/Logo';
+import PopularCities from './../../components/PopularCities';
 import SearchBar from './../../components/SearchBar';
 
 import bedImg from './../../global/assets/icons/bed.svg';
@@ -68,6 +69,7 @@ const Dashboard = () => {
         </div>
         <HelpCount count={823} />
         <SearchBar />
+        <PopularCities />
       </section>
       <section className="Dashboard-bottom">
         <div className="Dashboard-bottom__categoryHeading text-align-center">
