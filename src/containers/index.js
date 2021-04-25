@@ -5,7 +5,7 @@ import Dashboard from './Dashboard';
 
 import './../global/styles/common.scss';
 
-const App = () => {
+const Home = () => {
   return (
     <div className="App">
       <Header />
@@ -17,4 +17,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
