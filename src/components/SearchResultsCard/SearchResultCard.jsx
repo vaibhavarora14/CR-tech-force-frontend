@@ -53,6 +53,8 @@ const styles = theme => ({
     badge: {
         marginTop: theme.spacing(-1),
         marginRight: theme.spacing(-1),
+        color: '#000',
+        backgroundColor: '#fff'
     },
   });
 
