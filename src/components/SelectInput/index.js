@@ -58,7 +58,7 @@ const SelectInput = ({ label, placeholder, options, value, onChange, firstClick,
             getContentAnchorEl: null,
           }}
         >
-          <MenuItem value="">
+          <MenuItem style={{opacity: 0.3}} value="">
             <span>{placeholder}</span>
           </MenuItem>
           {optionsData}

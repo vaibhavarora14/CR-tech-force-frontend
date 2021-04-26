@@ -9,6 +9,7 @@ import Home from './containers'
 import AddResources from './containers/AddResources'
 import SearchPage from './containers/SearchPage'
 import { Provider as SearchProvider } from './context/SearchContext';
+import SocialLinks from './components/SocialLinks';
 
 const httpLink = createHttpLink({
   uri: 'https://vz3uy4iya2.execute-api.ap-south-1.amazonaws.com/dev/graphql'
@@ -71,6 +72,7 @@ function App() {
                         </Switch>
                     </div>
                     <Footer />
+                    <SocialLinks />
                 </ThemeProvider>
             </BrowserRouter>
           </div>

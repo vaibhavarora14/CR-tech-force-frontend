@@ -14,20 +14,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Button = ({ icon, disabled = false, label, onClick = () => {} }) => {
+const Button = ({ style, variant, icon, disabled = false, label, onClick = () => {} }) => {
   const classes = useStyles();
 
   return (
     <MaterialUIButton
-      variant="contained"
+      variant={variant || "contained"}
       color="primary"
       disabled={disabled}
       size="large"
-      className={clsx(classes.button, 'Button linear-gradient')}
+      style={style}
+      className={clsx(classes.button, variant ? 'Button' :'Button linear-gradient')}
       startIcon={icon}
       onClick={onClick}
     >
-      {label}
+      <span style={{textDecoration: variant ? 'underline': 'none'}}>
+        {label}
+      </span>
     </MaterialUIButton>
   );
 };
