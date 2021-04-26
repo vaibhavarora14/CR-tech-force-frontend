@@ -13,11 +13,19 @@ import DataPartnerPage from './containers/DataPartner'
 import { Provider as SearchProvider } from './context/SearchContext';
 import SocialLinks from './components/SocialLinks';
 import ScrollToTop from './components/ScrollToTop';
+import ApolloLinkTimeout from 'apollo-link-timeout';
 
+
+const timeoutLink = new ApolloLinkTimeout(15000);
 const httpLink = createHttpLink({
   uri: 'https://vz3uy4iya2.execute-api.ap-south-1.amazonaws.com/dev/graphql'
 })
 
+const timeoutHttpLink = timeoutLink.concat(httpLink);
+const client = new ApolloClient({
+  link: timeoutHttpLink,
+  cache: new InMemoryCache()
+})
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -52,10 +60,6 @@ const theme = createMuiTheme({
   }
 });
 
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache()
-})
 
 function App() {
   return (

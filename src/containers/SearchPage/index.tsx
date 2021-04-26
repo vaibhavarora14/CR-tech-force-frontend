@@ -1,7 +1,7 @@
 import { useLazyQuery } from '@apollo/client';
-import { Typography } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import SearchBar from '../../components/SearchBar';
@@ -12,6 +12,13 @@ function SearchPage() {
   const { state } = useContext(SearchContext);
 
   const [currentData, setCurrentData] = useState([]);
+  const [redirectToTwitter, setRedirectToTwitter] = useState(false)
+  const [timeoutTime, setTimeoutTime] = useState(5)
+  const timeoutRef = useRef(0);
+
+  if (timeoutTime === 0) {
+    window.open('https://twitter.com/COVResourcesIn', '_self')
+  }
 
   const getFilter = () => {
     let filter = "";
@@ -34,11 +41,29 @@ function SearchPage() {
   const [executeSearch, { loading, called }] = useLazyQuery(GET_SEARCH(getFilter()), {
     fetchPolicy: 'cache-and-network',
     onCompleted: (data) => {
-      setCurrentData(data?.workspace?.tickets?.edges || [])
+      const finalData = data?.workspace?.tickets?.edges || [];
+      if (finalData.length === 0) {
+        enableRedirectionToSocialHandle();
+      }
+      setCurrentData(finalData)
     }, onError: () => {
+      enableRedirectionToSocialHandle();
       setCurrentData([]);
-    }
+    },
   });
+
+  const enableRedirectionToSocialHandle = useCallback(() => {
+    setRedirectToTwitter(true)
+    timeoutRef.current = window.setInterval(() => {
+      setTimeoutTime(prevTime => prevTime - 1)
+    }, 1000)
+  }, [])
+
+  const handleClose = () => {
+    setRedirectToTwitter(false);
+    window.clearInterval(timeoutRef.current);
+    setTimeoutTime(5);
+  }
 
   useEffect(() => {
     if (state?.searchInputs?.state && state?.searchInputs?.city && state?.searchInputs?.requirement) {
@@ -48,6 +73,23 @@ function SearchPage() {
 
   return (
     <div>
+      <Dialog
+        open={redirectToTwitter}
+        onClose={handleClose}
+      >
+        <DialogContent>
+          <div>
+            Sorry! We don't have any active leads for your search.<br />
+            Redirecting you to our twitter handle for live updates.<br /><br />
+            Redirecting in {timeoutTime} seconds..
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
       <SearchBar onSubmit={() => {
         setCurrentData([]);
         executeSearch();
@@ -68,6 +110,7 @@ function SearchPage() {
           <div className="d-flex flex-wrap">
             {currentData.map(((edgeData: any) =>
               <SearchResultCard
+                key={edgeData.node.ticketId}
                 className="col-12 col-md-6 col-lg-4 px-sm-4"
                 title={edgeData.node.resourceName}
                 lastVerified={edgeData.node.updatedAt}
