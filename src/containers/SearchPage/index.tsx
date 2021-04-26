@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 import React, { useContext, useState } from 'react';
@@ -13,24 +13,37 @@ function SearchPage() {
 
   const [currentData, setCurrentData] = useState([]);
 
-  const { loading, called, refetch } = useQuery(GET_SEARCH(
-    state?.searchInputs?.state,
-    state?.searchInputs?.city,
-    state?.searchInputs?.requirement), {
-    variables: {
-      city: state?.searchInputs?.city,
-      state: state?.searchInputs?.state,
-      requirement: state?.searchInputs?.requirement,
-      enabled: false,
-    }, onCompleted: (data) => {
+  const getFilter = () => {
+    let filter = "";
+    if (state?.searchInputs?.state) {
+      filter += `custom_string:'${state?.searchInputs?.state}'`;
+    }
+
+    if (state?.searchInputs?.city) {
+      filter += `${filter.length > 0 ? ' AND ' : ''}custom_string:'${state?.searchInputs?.city}'`;
+    }
+
+    if (state?.searchInputs?.requirement) {
+      filter += `${filter.length > 0 ? ' AND ' : ''}custom_string:'${state?.searchInputs?.requirement}'`;
+    }
+
+    return `"${filter}"`
+  }
+
+  const [executeSearch, { loading, called }] = useLazyQuery(GET_SEARCH(getFilter()), {
+    onCompleted: (data) => {
       setCurrentData(data?.workspace?.tickets?.edges || [])
     }, onError: () => {
       setCurrentData([]);
     }
-  })
+  });
+
+
   return (
     <div>
-      <SearchBar onSubmit={refetch} />
+      <SearchBar onSubmit={() => {
+        executeSearch();
+      }} />
       {state?.searchInputs && called && <>
         {loading && <div className="d-flex justify-content-center">
           <Loader
@@ -63,24 +76,10 @@ function SearchPage() {
   );
 }
 
-const GET_SEARCH = (state: string, city: string, resourceType: string) => {
-  let filter = "";
-  if (state) {
-    filter += `custom_string:'${state}'`;
-  }
-
-  if (city) {
-    filter += `${filter.length > 0 ? ' AND ' : ''}custom_string:'${city}'`;
-  }
-
-  if (resourceType) {
-    filter += `${filter.length > 0 ? ' AND ' : ''}custom_string:'${resourceType}'`;
-  }
-
-  return gql`
+const GET_SEARCH = (filter: string) => gql`
     query {
         workspace {
-          tickets(filter: "${filter}") {
+          tickets(filter: ${filter}) {
             edges {
               node {
                 id
@@ -101,8 +100,6 @@ const GET_SEARCH = (state: string, city: string, resourceType: string) => {
           }
         }
       }
-    `
-}
-
+    `;
 
 export default SearchPage;
