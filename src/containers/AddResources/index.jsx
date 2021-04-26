@@ -801,7 +801,7 @@ const AddResources = (props) => {
             <div className={classes.headingRoot}>
                 <Typography variant='h5'>Add Verified Information</Typography>
                 <Typography variant='body1' style={{marginTop: theme.spacing(3), opacity: 0.6, maxWidth: theme.spacing(67.75)}}>
-                    Every information, lead suggested by you could end up saving someone's life. We sincerely thank you from the bottom of our hearts. Please fill the form below to add information. Our team of volunteers will verify the details before publishing.
+                The information being submitted by you could help save someone's life. Please fill the form below to add information. Our team of volunteers will verify the details before making it accessible to others.
                 </Typography>
             </div>
             <div className={classes.formRoot}>
