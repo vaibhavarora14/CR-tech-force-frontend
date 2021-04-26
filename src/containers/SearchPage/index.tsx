@@ -108,9 +108,9 @@ function SearchPage() {
         {currentData.length !== 0 && <>
           <Typography color="textSecondary" className="mb-4">Showing {currentData.length} Result{currentData.length > 1 ? 's' : ''}</Typography>
           <div className="d-flex flex-wrap">
-            {currentData.map(((edgeData: any) =>
+            {currentData.map(((edgeData: any, index: number) =>
               <SearchResultCard
-                key={edgeData.node.ticketId}
+                key={index}
                 className="col-12 col-md-6 col-lg-4 px-sm-4"
                 title={edgeData.node.resourceName}
                 lastVerified={edgeData.node.updatedAt}
@@ -133,7 +133,6 @@ const GET_SEARCH = (filter: string) => gql`
           tickets(filter: ${filter}) {
             edges {
               node {
-                id
                 ticketId
                 supplierDonorName
                 supplierDonorContactNumber
