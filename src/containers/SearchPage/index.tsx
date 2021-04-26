@@ -14,6 +14,7 @@ function SearchPage() {
   const { data, called } = useQuery(GET_SEARCH(state?.searchInputs?.state, state?.searchInputs?.city, state?.searchInputs?.requirement))
   if (state?.searchInputs) {
     currentData = data?.workspace?.tickets?.edges || [];
+    console.log(currentData)
   }
 
   // TODO: remove dummy data once API integration working fine
@@ -79,7 +80,7 @@ function SearchPage() {
                 location={edgeData.node.address}
                 details={edgeData.node.otherInfo}
                 thumbsUpcount={edgeData.node.upvoteCount}
-                thumbsDownCount={edgeData.node.downvoteCount}
+                ticketId={edgeData.node.ticketId}
               />
             ))}
           </div></>}
@@ -103,6 +104,7 @@ const GET_SEARCH = (state: string, city: string, resourceType: string) => {
                 state
                 costPerUnit
                 availableUnits
+                upvoteCount
               }
             }
           }
