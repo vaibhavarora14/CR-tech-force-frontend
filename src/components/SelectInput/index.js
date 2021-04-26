@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SelectInput = ({ label, placeholder, options, value, onChange }) => {
+const SelectInput = ({ label, placeholder, options, value, onChange, firstClick, errorMsg }) => {
   const classes = useStyles();
 
   const optionsData = options.map((option, index) => (
@@ -34,7 +35,7 @@ const SelectInput = ({ label, placeholder, options, value, onChange }) => {
 
   return (
     <div className="SelectInput d-flex flex-grow-1">
-      <FormControl className={classes.formControl}>
+      <FormControl className={classes.formControl} error={ firstClick && !value }>
         <InputLabel shrink id="demo-simple-select-placeholder-label-label">
           {label}
         </InputLabel>
@@ -62,6 +63,7 @@ const SelectInput = ({ label, placeholder, options, value, onChange }) => {
           </MenuItem>
           {optionsData}
         </Select>
+        {firstClick && !value && <FormHelperText>{errorMsg}</FormHelperText>}
       </FormControl>
     </div>
   );
