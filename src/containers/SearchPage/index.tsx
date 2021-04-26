@@ -1,4 +1,4 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 import React, { useContext, useState } from 'react';
@@ -42,6 +42,7 @@ function SearchPage() {
   return (
     <div>
       <SearchBar onSubmit={() => {
+        setCurrentData([]);
         executeSearch();
       }} />
       {state?.searchInputs && called && <>
@@ -56,7 +57,7 @@ function SearchPage() {
         </div>}
         {!loading && currentData.length === 0 && <h3>Sorry, No data available</h3>}
         {currentData.length !== 0 && <>
-          <Typography color="textSecondary" className="mb-4">Showing {currentData.length} Results</Typography>
+          <Typography color="textSecondary" className="mb-4">Showing {currentData.length} Result{currentData.length > 1 ? 's' : ''}</Typography>
           <div className="d-flex flex-wrap">
             {currentData.map(((edgeData: any) =>
               <SearchResultCard
