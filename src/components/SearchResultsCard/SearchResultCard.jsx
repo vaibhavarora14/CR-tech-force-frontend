@@ -208,7 +208,9 @@ const SearchResultCard = (props) => {
           <div className="d-flex">
             <div className="flex-grow-1 mr-3">
               <Typography variant="body2">Phone</Typography>
-              <Typography variant="h6">{phone}</Typography>
+              <Typography variant="h6">
+                <a href={`tel:${phone}`}>{phone}</a>
+              </Typography>
             </div>
             <Button
               style={{ height: "fit-content" }}
