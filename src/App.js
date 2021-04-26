@@ -12,6 +12,7 @@ import VolunteerPage from './containers/Volunteer'
 import DataPartnerPage from './containers/DataPartner'
 import { Provider as SearchProvider } from './context/SearchContext';
 import SocialLinks from './components/SocialLinks';
+import ScrollToTop from './components/ScrollToTop';
 
 const httpLink = createHttpLink({
   uri: 'https://vz3uy4iya2.execute-api.ap-south-1.amazonaws.com/dev/graphql'
@@ -39,7 +40,7 @@ const theme = createMuiTheme({
         boxShadow: 'none',
         borderRadius: '8px',
       }
-    }, 
+    },
     MuiTypography: {
       h6: {
         fontSize: '18px',
@@ -63,21 +64,22 @@ function App() {
         <ThemeProvider theme={theme}>
           <div className="App">
             <BrowserRouter>
-                <ThemeProvider theme={theme}>
-                    <Header />
-                    <div className="container">
-                        <Switch>
-                            <Route exact path="/addResources" component={AddResources} />
-                            <Route exact path="/home" component={Home} />
-                            <Route exact path="/search" component={SearchPage} />
-                            <Route exact path="/" component={Home} />
-                            <Route exact path="/volunteer" component={VolunteerPage} />
-                            <Route exact path="/dataPartner" component={DataPartnerPage} />
-                        </Switch>
-                    </div>
-                    <Footer />
-                    <SocialLinks />
-                </ThemeProvider>
+              <ScrollToTop />
+              <ThemeProvider theme={theme}>
+                <Header />
+                <div className="container">
+                  <Switch>
+                    <Route exact path="/addResources" component={AddResources} />
+                    <Route exact path="/home" component={Home} />
+                    <Route exact path="/search" component={SearchPage} />
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/volunteer" component={VolunteerPage} />
+                    <Route exact path="/dataPartner" component={DataPartnerPage} />
+                  </Switch>
+                </div>
+                <Footer />
+                <SocialLinks />
+              </ThemeProvider>
             </BrowserRouter>
           </div>
         </ThemeProvider>
