@@ -20,52 +20,6 @@ function SearchPage() {
     console.log(currentData)
   }
 
-  // TODO: remove dummy data once API integration working fine
-  // currentData = [
-  //   {
-  //     "node": {
-  //       updatedAt: null,
-  //       ticketId: null,
-  //       state: null,
-  //       city: null,
-  //       address: null,
-  //       pincode: null,
-  //       contactName: null,
-  //       supplierDonorContactNumber:
-  //         null,
-  //       resourceType: null,
-  //       resourceName: null,
-  //       costPerUnit: null,
-  //       availableUnits: null,
-  //       upvoteCount: null,
-  //       otherInfo: null,
-  //       subResourceType: null,
-  //     }
-  //   },
-  //   {
-  //     "node": {
-  //       updatedAt: null,
-  //       ticketId: null,
-  //       state: null,
-  //       city: null,
-  //       address: null,
-  //       pincode: null,
-  //       contactName: null,
-  //       supplierDonorContactNumber:
-  //         null,
-  //       resourceType: null,
-  //       resourceName: null,
-  //       costPerUnit: null,
-  //       availableUnits: null,
-  //       upvoteCount: null,
-  //       otherInfo: null,
-  //       subResourceType: null,
-  //     }
-  //   },
-  // ]
-
-
-
   return (
     <div>
       <SearchBar />
@@ -134,7 +88,6 @@ const GET_SEARCH = (state: string, city: string, resourceType: string) => {
                 updatedAt
                 address
                 otherInfo
-                downvoteCount
               }
             }
           }
