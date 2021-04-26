@@ -1,4 +1,4 @@
-$root: '.SearchBar';
+$root: ".SearchBar";
 
 #{$root} {
   border: 1px solid #e7e7e7;
@@ -15,7 +15,7 @@ $root: '.SearchBar';
       margin-left: 0;
     }
     &::after {
-      content: ' ';
+      content: " ";
       background-color: #e7e7e7;
       width: 1px;
       height: 40px;
@@ -64,5 +64,11 @@ $root: '.SearchBar';
       right: initial;
       justify-content: center;
     }
+  }
+}
+
+.SelectInput {
+  label {
+    white-space: nowrap;
   }
 }
