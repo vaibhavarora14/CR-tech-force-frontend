@@ -13,7 +13,8 @@ import SelectInput from './../SelectInput';
 
 import './SearchBar.scss';
 
-const SearchBar = ({ history }) => {
+const SearchBar = (props) => {
+  const { history } = props;
   const { searchInputs, state } = useContext(SearchContext);
   const [selectedState, setSelectedState] = useState(state.searchInputs ? state.searchInputs.state : '');
   const [selectedCity, setSelectedCity] = useState(state.searchInputs ? state.searchInputs.city : '');
@@ -47,16 +48,25 @@ const SearchBar = ({ history }) => {
     setSelectedRequirement(selectedRequirement);
   };
 
+  const isValidSearchQuery = (searchQuery) => {
+    return searchQuery.state && searchQuery.city && searchQuery.requirement
+  }
+
   const handleSubmit = () => {
     const {
       location: { pathname },
     } = history;
     const searchQuery = {
-      state: selectedState,
-      city: selectedCity,
-      requirement: selectedRequirement,
+      state: selectedState.trim(),
+      city: selectedCity.trim(),
+      requirement: selectedRequirement.trim(),
     };
     searchInputs(searchQuery);
+
+    if (props.onSubmit && isValidSearchQuery(searchQuery)) {
+      props.onSubmit();
+    }
+
     pathname === '/' && history.push(ROUTES.SEARCH);
   };
 
