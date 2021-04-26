@@ -881,7 +881,7 @@ const AddResources = (props) => {
                 <TextField style={{width: '100%'}} variant='outlined' label='Cost per Unit (in ₹)' type='number' value={cost_per_unit} onChange={(e) => setCostPerUnit(e.target.value)} />
                     <TextField style={{width: '100%'}} error={nameError} variant='outlined' required label='Contact Name' value={contact_name} onChange={(e) => setContactName(e.target.value) || setNameError(false)} />
                     <TextField style={{width: '100%'}} error={numberError} variant='outlined' required label='Phone Number' type='phone' value={contact_number} onChange={(e) => setContactNumber(e.target.value) || setNumberError(false)} />
-                    <TextField style={{width: '100%'}} variant='outlined' label='Lead Source' value={lead_source} onChange={(e) => setLeadSource(e.target.value)} />
+                    <TextField style={{width: '100%'}} variant='outlined' label='Information Source' value={lead_source} onChange={(e) => setLeadSource(e.target.value)} />
 
 
                     <Button onClick={() => checkDataAndSubmit()} style={{marginTop: theme.spacing(2), width: theme.spacing(20), display: 'flex', justifyContent: 'center', alignItems: 'center'}} variant='contained' color='primary'>
