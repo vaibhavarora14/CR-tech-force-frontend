@@ -4,6 +4,9 @@ import GreenTick from '../GreenTick/GreenTick';
 import ThumbsUp from '../../global/assets/icons/thumsup.svg';
 import ThumbsDown from '../../global/assets/icons/thumbsdown.svg';
 import { gql, useMutation } from '@apollo/client';
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -172,7 +175,7 @@ const SearchResultCard = (props) => {
                         <Typography variant='body1'>{title}</Typography>
                         <GreenTick />                        
                     </div>
-                    <Typography style={{opacity: 0.7}} variant='body2'>Last Verified: {lastVerified} ago</Typography>
+                    <Typography style={{opacity: 0.7}} variant='body2'>Last Verified: {dayjs(lastVerified).fromNow()}</Typography>
                 </div>
                 
                 <div className={classes.cardContent}>
