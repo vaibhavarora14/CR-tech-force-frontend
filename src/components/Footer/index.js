@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 
 import superheroImg from '../../global/assets/icons/superhero.svg';
@@ -10,17 +11,23 @@ const footerLinks = [
     {
       id: 'leads',
       primaryText: "Have any lead?",
-      secondaryText: "Click Here to Submit Info"
+      secondaryText: "Click Here to Submit Info",
+      path: "/addResources",
+      isLink: true
     },
     {
       id: 'volunteer',
       primaryText: "Volunteer with us",
-      secondaryText: "Click Here to join the mission"
+      secondaryText: "Click Here to join the mission",
+      isLink: false,
+      path: "https://twitter.com/COVResourcesIn"
     },
     {
       id: 'partner',
       primaryText: "Become Data Partner",
-      secondaryText: "Click Here to join the mission"
+      secondaryText: "Click Here to join the mission",
+      isLink: false,
+      path: "https://twitter.com/COVResourcesIn"
     }
   ];
   
@@ -44,13 +51,23 @@ const footerLinks = [
   ];
 
 const Footer = () => {
-    const footerButtons = footerLinks.map(({ id, primaryText, secondaryText }) => (
+    const history = useHistory();
+    const footerButtons = footerLinks.map(({ id, primaryText, secondaryText, isLink, path }) => {
+      return (
         <FooterButton
           key={id}
           primaryText={primaryText}
           secondaryText={secondaryText}
+          onClick={() => {
+            if (isLink) {
+              history.push(path);
+            } else {
+              window.open(path, "_blank");
+            }
+          }}
         />
-    ));
+      );
+    });
   
     const footerText = footerDescriptionData.map(({ id, text }) => (
       <Typography color="secondary" gutterBottom className="footer__container-superhero-description-item" key={id}>{text}</Typography>
