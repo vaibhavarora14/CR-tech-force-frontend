@@ -19,15 +19,15 @@ const footerLinks = [
       id: 'volunteer',
       primaryText: "Volunteer with us",
       secondaryText: "Click Here to join the mission",
-      isLink: false,
-      path: "https://twitter.com/COVResourcesIn"
+      isLink: true,
+      path: "/volunteer"
     },
     {
       id: 'partner',
       primaryText: "Become Data Partner",
       secondaryText: "Click Here to join the mission",
-      isLink: false,
-      path: "https://twitter.com/COVResourcesIn"
+      isLink: true,
+      path: "/dataPartner"
     }
   ];
   

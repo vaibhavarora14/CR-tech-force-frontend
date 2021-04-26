@@ -8,6 +8,8 @@ import Footer from './components/Footer'
 import Home from './containers'
 import AddResources from './containers/AddResources'
 import SearchPage from './containers/SearchPage'
+import VolunteerPage from './containers/Volunteer'
+import DataPartnerPage from './containers/DataPartner'
 import { Provider as SearchProvider } from './context/SearchContext';
 import SocialLinks from './components/SocialLinks';
 
@@ -69,6 +71,8 @@ function App() {
                             <Route exact path="/home" component={Home} />
                             <Route exact path="/search" component={SearchPage} />
                             <Route exact path="/" component={Home} />
+                            <Route exact path="/volunteer" component={VolunteerPage} />
+                            <Route exact path="/dataPartner" component={DataPartnerPage} />
                         </Switch>
                     </div>
                     <Footer />
