@@ -1,0 +1,62 @@
+$root: ".footer";
+
+#{$root} {
+  background: linear-gradient(97.93deg, #4452CE 43.88%, #6744CC 109.61%);
+  width: 100%;
+  flex-direction: row;
+  &__container {
+    max-width: 868px;
+    padding: 60px 0;
+    flex: 1;
+    &-superhero {
+      flex: 1;
+      flex-direction: column;
+      &-photo {
+        width: 88px;
+      }
+      &-photoContainer {
+        margin-bottom: 10px;
+      }
+      &-textContainer {
+        padding-right: 80px;
+      }
+      &-description {
+        &-item {
+          color: rgba(255, 255, 255, 0.6);
+        }
+      }
+    }
+    &-links {
+      flex-direction: column;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #{$root} {
+    &__container {
+      flex-direction: column;
+      &-superhero {
+        text-align: center;
+        &-photo {
+          width: 40px;
+        }
+        &-title {
+          padding-left: 54px;
+          padding-right: 54px;
+        }
+        &-photoContainer {
+          margin-bottom: 16px;
+        }
+        &-textContainer {
+          padding-right: 36px;
+          padding-left: 36px;
+        }
+      }
+      &-links {
+        padding-left: 48px;
+        padding-right: 48px;
+      }
+    }
+  }
+}

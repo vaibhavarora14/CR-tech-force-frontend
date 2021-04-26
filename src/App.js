@@ -4,6 +4,7 @@ import { createMuiTheme } from '@material-ui/core';
 import './global/styles/common.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import Home from './containers'
 import AddResources from './containers/AddResources'
 import SearchPage from './containers/SearchPage'
@@ -69,6 +70,7 @@ function App() {
                             <Route exact path="/" component={Home} />
                         </Switch>
                     </div>
+                    <Footer />
                 </ThemeProvider>
             </BrowserRouter>
           </div>
