@@ -1,13 +1,12 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-
+import React from 'react';
 import './SelectInput.scss';
+
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -35,7 +34,7 @@ const SelectInput = ({ label, placeholder, options, value, onChange, firstClick,
 
   return (
     <div className="SelectInput d-flex flex-grow-1">
-      <FormControl className={classes.formControl} error={ firstClick && !value }>
+      <FormControl className={classes.formControl} error={firstClick && !value}>
         <InputLabel shrink id="demo-simple-select-placeholder-label-label">
           {label}
         </InputLabel>
@@ -58,12 +57,11 @@ const SelectInput = ({ label, placeholder, options, value, onChange, firstClick,
             getContentAnchorEl: null,
           }}
         >
-          <MenuItem style={{opacity: 0.3}} value="">
+          <MenuItem style={{ opacity: 0.3 }} value="">
             <span>{placeholder}</span>
           </MenuItem>
           {optionsData}
         </Select>
-        {firstClick && !value && <FormHelperText>{errorMsg}</FormHelperText>}
       </FormControl>
     </div>
   );

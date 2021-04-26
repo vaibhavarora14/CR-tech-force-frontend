@@ -44,7 +44,7 @@ function SearchPage() {
     if (state?.searchInputs?.state && state?.searchInputs?.city && state?.searchInputs?.requirement) {
       executeSearch();
     }
-  }, [state]);
+  }, [state, executeSearch]);
 
   return (
     <div>

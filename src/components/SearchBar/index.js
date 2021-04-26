@@ -110,7 +110,6 @@ const SearchBar = (props) => {
         options={states}
         onChange={handleStateChange}
         firstClick={firstClick}
-        errorMsg="Please enter your state!"
       />
       <SelectInput
         label="Select City / Region"
@@ -119,7 +118,6 @@ const SearchBar = (props) => {
         options={cities}
         onChange={handleCityChange}
         firstClick={firstClick}
-        errorMsg="Please enter your city!"
       />
       <SelectInput
         label="What are you're looking for"
@@ -128,7 +126,6 @@ const SearchBar = (props) => {
         options={requirements}
         onChange={handleRequirementChange}
         firstClick={firstClick}
-        errorMsg="Please enter what are you're looking for!"
       />
       <Button
         label="Find Leads"
