@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
 import { withRouter } from 'react-router';
+import Button from '../Button';
 
 import ROUTES from './../../constants/routes';
 
 import { Context as SearchContext } from './../../context/SearchContext';
-
-import TextButton from './../TextButton';
-
 import './PopularCities.scss';
 
 const popularCities = [
@@ -24,7 +22,7 @@ const PopularCities = (props) => {
   const { history } = props;
 
   const cityButtons = popularCities.map((city) => (
-    <TextButton key={city} label={city} onClick={() => handleSubmit(city)} />
+    <Button variant='text' style={{marginRight: '8px', marginBottom: '8px'}} key={city} label={city} onClick={() => handleSubmit(city)} />
   ));
 
   const handleSubmit = (city) => {
