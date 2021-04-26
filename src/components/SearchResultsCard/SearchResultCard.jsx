@@ -139,6 +139,20 @@ const SearchResultCard = (props) => {
         }
     })
 
+
+    const copyNumber = () => {
+        navigator.clipboard.writeText(phone)
+        setDialogMessage("Phone Number Copied to Clipboard")
+        setDialogOpen(true)   
+    }
+
+    const copyLink = () => {
+        // @TODO generate link to this page
+        navigator.clipboard.writeText("https://covid-resources-india-cef91.web.app/")
+        setDialogMessage("Link Copied to Clipboard")
+        setDialogOpen(true)   
+    }
+
     return (
         <div className={`${classes.container} ${props.className || ''}`}>
             <Card variant='outlined' className={classes.root}>
@@ -160,7 +174,7 @@ const SearchResultCard = (props) => {
                     <Typography style={{marginTop: theme.spacing(2)}} variant='body2'>Details</Typography>
                     <Typography variant='body1'>{details}</Typography>
 
-                    <Button style={{
+                    <Button onClick={() => copyNumber()} style={{
                         position: 'absolute',
                         top: theme.spacing(3.75),
                         right: theme.spacing(3),
@@ -188,7 +202,7 @@ const SearchResultCard = (props) => {
                 </div>
             </Card>
             
-            <Button color='primary' variant='outlined' style={{marginTop: theme.spacing(3)}}>
+            <Button onClick={() => copyLink()} color='primary' variant='outlined' style={{marginTop: theme.spacing(3)}}>
                 Share
             </Button>
 
