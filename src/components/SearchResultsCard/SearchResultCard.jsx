@@ -1,13 +1,18 @@
-import { Badge, Button, Card, IconButton, makeStyles, Typography, withTheme } from '@material-ui/core';
-import React from 'react';
+import { Badge, Button, Card, IconButton, makeStyles, Snackbar, Typography, withTheme } from '@material-ui/core';
+import React, { useState } from 'react';
 import GreenTick from '../GreenTick/GreenTick';
 import ThumbsUp from '../../global/assets/icons/thumsup.svg';
 import ThumbsDown from '../../global/assets/icons/thumbsdown.svg';
+import { gql, useMutation } from '@apollo/client';
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
 
 const useStyles = makeStyles(theme => ({
     container: {
         display: 'flex',
         flexDirection: 'column',
+        marginBottom: '1.5rem'
     },
     root: {
         minWidth: theme.spacing(37.25),
@@ -59,10 +64,110 @@ const useStyles = makeStyles(theme => ({
   }
 ))
 
+const CHANGE_VOTE_COUNT = gql`
+    mutation (
+        $ticketId: String
+        $value: String
+    ) {
+        changeVoteCount(input: {
+            ticketId: $ticketId,
+            value: $value
+        }) {
+            status
+            message
+        }
+    }
+`;
+
 
 const SearchResultCard = (props) => {
     const classes = useStyles();
-    const { title, lastVerified, phone, location, details, thumbsUpcount, thumbsDownCount, theme } = props;
+    let { title, lastVerified, phone, location, details, thumbsUpcount, thumbsDownCount, theme, ticketId } = props;
+
+    if (thumbsUpcount && !isNaN(thumbsUpcount)) {
+        thumbsUpcount = parseInt(thumbsUpcount)
+    } else {
+        thumbsUpcount = 0
+    }
+
+    const [upvote, setUpvote] = useState(thumbsUpcount)
+
+    const [dialogMessage, setDialogMessage] = useState('')
+    const [dialogOpen, setDialogOpen] = useState(false)
+
+    const [allowUpvote, setAllowUpvote] = useState(true)
+    const [allowDownvote, setAllowDownvote] = useState(true)
+
+    const [upvoteTicket] = useMutation(CHANGE_VOTE_COUNT, {
+        variables: {
+            ticketId,
+            value: `${(thumbsUpcount+1)}`,
+        },
+        update(proxy, result) {
+            console.log(result)
+            if (result && result.data && result.data.changeVoteCount && result.data.changeVoteCount.status === "200") {
+                setUpvote(thumbsUpcount + 1)
+                setAllowDownvote(true)
+                setAllowUpvote(false)
+            } else {
+                setDialogMessage("Please try again later.")
+                setDialogOpen(true)   
+            }
+        },
+        onError(err) {
+            setDialogMessage("Please try again later.")
+            setDialogOpen(true)
+        }
+    })
+
+
+    const [downvoteTicket] = useMutation(CHANGE_VOTE_COUNT, {
+        variables: {
+            ticketId,
+            value: `${(upvote - 1 > -1 ? upvote - 1 : 0)}`,
+        },
+        update(proxy, result) {
+            console.log(result)
+            if (result && result.data && result.data.changeVoteCount && result.data.changeVoteCount.status === "200") {
+                setUpvote(upvote - 1 > -1 ? upvote - 1 : 0)
+                setAllowDownvote(false)
+                setAllowUpvote(true)
+            } else {
+                setDialogMessage("Please try again later.")
+                setDialogOpen(true)   
+            }
+        },
+        onError(err) {
+            setDialogMessage("Please try again later.")
+            setDialogOpen(true)
+        }
+    })
+
+
+    const copyInfo = () => {
+        const lastVerifiedText = ` - Last Verified: ${lastVerified} ago`
+        const phoneNumberText = `Phone Number - ${phone}`
+        const addressText = `Address - ${location}`
+        const detailsText = `Other details - ${details}`
+
+        const copyText = 
+        `${title}${lastVerified ? lastVerifiedText : ''}
+        ${phone ? phoneNumberText : '' }
+        ${location ? addressText : '' }
+        ${details ? detailsText : '' }`
+
+        navigator.clipboard.writeText(copyText)
+        setDialogMessage("Information Copied to Clipboard")
+        setDialogOpen(true)   
+    }
+
+    const copyLink = () => {
+        // @TODO generate link to this page
+        navigator.clipboard.writeText("https://covid-resources-india-cef91.web.app/")
+        setDialogMessage("Link Copied to Clipboard")
+        setDialogOpen(true)   
+    }
+
     return (
         <div className={`${classes.container} ${props.className || ''}`}>
             <Card variant='outlined' className={classes.root}>
@@ -71,7 +176,7 @@ const SearchResultCard = (props) => {
                         <Typography variant='body1'>{title}</Typography>
                         <GreenTick />                        
                     </div>
-                    <Typography style={{opacity: 0.7}} variant='body2'>Last Verified: {lastVerified} ago</Typography>
+                    <Typography style={{opacity: 0.7}} variant='body2'>Last Verified: {dayjs(lastVerified).fromNow()}</Typography>
                 </div>
                 
                 <div className={classes.cardContent}>
@@ -84,7 +189,7 @@ const SearchResultCard = (props) => {
                     <Typography style={{marginTop: theme.spacing(2)}} variant='body2'>Details</Typography>
                     <Typography variant='body1'>{details}</Typography>
 
-                    <Button style={{
+                    <Button onClick={() => copyInfo()} style={{
                         position: 'absolute',
                         top: theme.spacing(3.75),
                         right: theme.spacing(3),
@@ -94,15 +199,15 @@ const SearchResultCard = (props) => {
                 <div className={classes.cardFooter}>
                     <Typography style={{opacity: 0.7}} variant='body1'>Was this helpful?</Typography>
                     <div className={classes.thumbsUp}>
-                        <IconButton style={{background: '#cccccc'}}>
-                            <Badge classes={{badge: classes.badge}} color='secondary' badgeContent={thumbsUpcount}>
+                        <IconButton onClick={() => allowUpvote && upvoteTicket()} style={{background: '#cccccc'}}>
+                            <Badge classes={{badge: classes.badge}} color='secondary' badgeContent={upvote}>
                                 <img src={ThumbsUp} alt={"thumbs up"} />
                             </Badge>
                         </IconButton>
                         <Typography style={{opacity: 0.7, marginTop: theme.spacing(0.25)}} variant='subtitle2'>Yes</Typography>
                     </div>
                     <div className={classes.thumbsDown}>
-                        <IconButton style={{background: '#cccccc'}}>
+                        <IconButton onClick={() => allowDownvote && downvoteTicket()} style={{background: '#cccccc'}}>
                             <Badge classes={{badge: classes.badge}} color='secondary' badgeContent={thumbsDownCount}>
                                 <img src={ThumbsDown} alt={"thumbs down"} />
                             </Badge>
@@ -112,9 +217,20 @@ const SearchResultCard = (props) => {
                 </div>
             </Card>
             
-            <Button color='primary' variant='outlined' style={{marginTop: theme.spacing(3)}}>
+            <Button onClick={() => copyLink()} color='primary' variant='outlined' style={{marginTop: theme.spacing(3)}}>
                 Share
             </Button>
+
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                open={dialogOpen}
+                autoHideDuration={2000}
+                onClose={() => setDialogOpen(false)}
+                message={dialogMessage}
+            />
         </div>
     )
 }

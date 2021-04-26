@@ -19,52 +19,6 @@ function SearchPage() {
     currentData = data?.workspace?.tickets?.edges || [];
   }
 
-  // TODO: remove dummy data once API integration working fine
-  // currentData = [
-  //   {
-  //     "node": {
-  //       updatedAt: null,
-  //       ticketId: null,
-  //       state: null,
-  //       city: null,
-  //       address: null,
-  //       pincode: null,
-  //       contactName: null,
-  //       supplierDonorContactNumber:
-  //         null,
-  //       resourceType: null,
-  //       resourceName: null,
-  //       costPerUnit: null,
-  //       availableUnits: null,
-  //       upvoteCount: null,
-  //       otherInfo: null,
-  //       subResourceType: null,
-  //     }
-  //   },
-  //   {
-  //     "node": {
-  //       updatedAt: null,
-  //       ticketId: null,
-  //       state: null,
-  //       city: null,
-  //       address: null,
-  //       pincode: null,
-  //       contactName: null,
-  //       supplierDonorContactNumber:
-  //         null,
-  //       resourceType: null,
-  //       resourceName: null,
-  //       costPerUnit: null,
-  //       availableUnits: null,
-  //       upvoteCount: null,
-  //       otherInfo: null,
-  //       subResourceType: null,
-  //     }
-  //   },
-  // ]
-
-
-
   return (
     <div>
       <SearchBar />
@@ -91,7 +45,7 @@ function SearchPage() {
                 location={edgeData.node.address}
                 details={edgeData.node.otherInfo}
                 thumbsUpcount={edgeData.node.upvoteCount}
-                thumbsDownCount={edgeData.node.downvoteCount}
+                ticketId={edgeData.node.ticketId}
               />
             ))}
           </div></>}
@@ -128,12 +82,11 @@ const GET_SEARCH = (state: string, city: string, resourceType: string) => {
                 state
                 costPerUnit
                 availableUnits
+                upvoteCount
                 resourceName
                 updatedAt
                 address
                 otherInfo
-                upvoteCount
-                downvoteCount
               }
             }
           }
