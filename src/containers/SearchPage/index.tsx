@@ -32,6 +32,7 @@ function SearchPage() {
 
 
   const [executeSearch, { loading, called }] = useLazyQuery(GET_SEARCH(getFilter()), {
+    fetchPolicy: 'cache-and-network',
     onCompleted: (data) => {
       setCurrentData(data?.workspace?.tickets?.edges || [])
     }, onError: () => {
