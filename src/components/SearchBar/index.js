@@ -96,13 +96,13 @@ const SearchBar = (props) => {
         errorMsg="Please enter your city!"
       />
       <SelectInput
-        label="What are your looking for"
+        label="What are you're looking for"
         placeholder="eg. ICU Beds, Oxygen"
         value={selectedRequirement}
         options={requirements}
         onChange={handleRequirementChange}
         firstClick={firstClick}
-        errorMsg="Please enter what are your looking for!"
+        errorMsg="Please enter what are you're looking for!"
       />
       <Button
         label="Find Leads"
