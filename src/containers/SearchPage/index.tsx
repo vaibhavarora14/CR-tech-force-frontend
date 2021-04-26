@@ -14,7 +14,6 @@ function SearchPage() {
   const { data, called } = useQuery(GET_SEARCH(state?.searchInputs?.state, state?.searchInputs?.city, state?.searchInputs?.requirement))
   if (state?.searchInputs) {
     currentData = data?.workspace?.tickets?.edges || [];
-    console.log(currentData)
   }
 
   // TODO: remove dummy data once API integration working fine

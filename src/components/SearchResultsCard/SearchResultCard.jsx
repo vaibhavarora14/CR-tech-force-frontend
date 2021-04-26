@@ -140,9 +140,20 @@ const SearchResultCard = (props) => {
     })
 
 
-    const copyNumber = () => {
-        navigator.clipboard.writeText(phone)
-        setDialogMessage("Phone Number Copied to Clipboard")
+    const copyInfo = () => {
+        const lastVerifiedText = ` - Last Verified: ${lastVerified} ago`
+        const phoneNumberText = `Phone Number - ${phone}`
+        const addressText = `Address - ${location}`
+        const detailsText = `Other details - ${details}`
+
+        const copyText = 
+        `${title}${lastVerified ? lastVerifiedText : ''}
+        ${phone ? phoneNumberText : '' }
+        ${location ? addressText : '' }
+        ${details ? detailsText : '' }`
+
+        navigator.clipboard.writeText(copyText)
+        setDialogMessage("Information Copied to Clipboard")
         setDialogOpen(true)   
     }
 
@@ -174,7 +185,7 @@ const SearchResultCard = (props) => {
                     <Typography style={{marginTop: theme.spacing(2)}} variant='body2'>Details</Typography>
                     <Typography variant='body1'>{details}</Typography>
 
-                    <Button onClick={() => copyNumber()} style={{
+                    <Button onClick={() => copyInfo()} style={{
                         position: 'absolute',
                         top: theme.spacing(3.75),
                         right: theme.spacing(3),
@@ -215,7 +226,6 @@ const SearchResultCard = (props) => {
                 autoHideDuration={2000}
                 onClose={() => setDialogOpen(false)}
                 message={dialogMessage}
-
             />
         </div>
     )
