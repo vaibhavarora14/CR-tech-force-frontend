@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router';
+import { requirements } from '../../constants';
+import ROUTES from '../../constants/routes';
 
 import HelpCount from './../../components/HelpCount';
 import JumboButton from './../../components/JumboButton';
 import Logo from './../../components/Logo';
 import PopularCities from './../../components/PopularCities';
 import SearchBar from './../../components/SearchBar';
+import { Context as SearchContext } from './../../context/SearchContext';
 
 import bedImg from './../../global/assets/icons/bed.svg';
 import hospitalImg from './../../global/assets/icons/hospital.svg';
@@ -19,43 +23,61 @@ const categoryData = [
     id: 'hospital',
     imgSrc: hospitalImg,
     primaryText: 'ICU Beds',
+    value: requirements[1],
     secondaryText: 'Click here to find beds in your location',
   },
   {
     id: 'bed',
     imgSrc: bedImg,
     primaryText: 'Oxygen Beds',
+    value: requirements[1],
     secondaryText: 'Click here to find beds in your location',
   },
   {
     id: 'oxygen',
     imgSrc: oxygenImg,
     primaryText: 'Oxygen Supplies',
+    value: requirements[0],
     secondaryText: 'Find cylinders, refillers in your locality',
   },
   {
     id: 'medicine',
     imgSrc: medicineImg,
     primaryText: 'Medicines / Remdesivir',
+    value: requirements[2],
     secondaryText: 'Find medicines in your area',
   },
   {
     id: 'tiffin',
     imgSrc: tiffinImg,
     primaryText: 'Tiffin Services',
+    value: requirements[6],
     secondaryText: 'Get food delivered at your doorsteps',
   },
 ];
 
 const Dashboard = () => {
+  const { searchInputs, state } = useContext(SearchContext);
+  const history = useHistory();
+
+  const handleOnClick = (requirement) => {
+    const searchQuery = {
+      ...state?.searchInputs,
+      requirement
+    }
+    searchInputs(searchQuery);
+    history.push(ROUTES.SEARCH)
+  }
+
   const categories = categoryData.map(
-    ({ id, imgSrc, primaryText, secondaryText }) => (
+    ({ id, imgSrc, primaryText, secondaryText, value }) => (
       <JumboButton
         key={id}
         altText={id}
         iconSrc={imgSrc}
         primaryText={primaryText}
         secondaryText={secondaryText}
+        onClick={() => handleOnClick(value)}
       />
     )
   );

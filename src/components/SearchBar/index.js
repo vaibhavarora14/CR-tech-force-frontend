@@ -85,9 +85,9 @@ const SearchBar = (props) => {
     } = history;
     setFirstClick(true);
     const searchQuery = {
-      state: selectedState.trim(),
-      city: selectedCity.trim(),
-      requirement: selectedRequirement.trim(),
+      state: selectedState,
+      city: selectedCity,
+      requirement: selectedRequirement,
     };
     if (!isValidSearchQuery(searchQuery)) {
       return;
