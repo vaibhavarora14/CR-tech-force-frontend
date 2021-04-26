@@ -13,7 +13,10 @@ function SearchPage() {
 
   const [currentData, setCurrentData] = useState([]);
 
-  const { loading, called, refetch } = useQuery(GET_SEARCH_QUERY, {
+  const { loading, called, refetch } = useQuery(GET_SEARCH(
+    state?.searchInputs?.state,
+    state?.searchInputs?.city,
+    state?.searchInputs?.requirement), {
     variables: {
       city: state?.searchInputs?.city,
       state: state?.searchInputs?.state,
@@ -60,31 +63,46 @@ function SearchPage() {
   );
 }
 
-const GET_SEARCH_QUERY = gql`
-query {
-          workspace {
-            tickets(filter: "custom_string='$city' AND custom_string='$state' AND custom_string='$requirement'") {
-              edges {
-                node {
-                  id
-                  ticketId
-                  supplierDonorName
-                  supplierDonorContactNumber
-                  city
-                  state
-                  costPerUnit
-                  availableUnits
-                  upvoteCount
-                  resourceName
-                  updatedAt
-                  address
-                  otherInfo
-                }
+const GET_SEARCH = (state: string, city: string, resourceType: string) => {
+  let filter = "";
+  if (state) {
+    filter += `custom_string:'${state}'`;
+  }
+
+  if (city) {
+    filter += `${filter.length > 0 ? ' AND ' : ''}custom_string:'${city}'`;
+  }
+
+  if (resourceType) {
+    filter += `${filter.length > 0 ? ' AND ' : ''}custom_string:'${resourceType}'`;
+  }
+
+  return gql`
+    query {
+        workspace {
+          tickets(filter: "${filter}") {
+            edges {
+              node {
+                id
+                ticketId
+                supplierDonorName
+                supplierDonorContactNumber
+                city
+                state
+                costPerUnit
+                availableUnits
+                upvoteCount
+                resourceName
+                updatedAt
+                address
+                otherInfo
               }
             }
           }
         }
-`
+      }
+    `
+}
 
 
 export default SearchPage;
