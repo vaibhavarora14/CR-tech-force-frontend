@@ -128,6 +128,12 @@ const GET_SEARCH = (state: string, city: string, resourceType: string) => {
                 state
                 costPerUnit
                 availableUnits
+                resourceName
+                updatedAt
+                address
+                otherInfo
+                upvoteCount
+                downvoteCount
               }
             }
           }
