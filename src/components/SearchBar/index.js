@@ -40,12 +40,12 @@ const SearchBar = (props) => {
 
       setCities(citiesData);
     }
-      
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const states = statesCitiesData.map((state) => state.state);
-  
+
 
   const handleStateChange = (selectedState) => {
     setSelectedState(selectedState);
@@ -65,7 +65,7 @@ const SearchBar = (props) => {
   };
 
 
-  
+
 
   const handleCityChange = (selectedCity) => {
     setSelectedCity(selectedCity);
@@ -89,7 +89,7 @@ const SearchBar = (props) => {
       city: selectedCity.trim(),
       requirement: selectedRequirement.trim(),
     };
-    if(!isValidSearchQuery(searchQuery)){
+    if (!isValidSearchQuery(searchQuery)) {
       return;
     }
     searchInputs(searchQuery);
@@ -102,7 +102,7 @@ const SearchBar = (props) => {
   };
 
   return (
-    <div className="SearchBar d-flex">
+    <div className="SearchBar d-flex w-100">
       <SelectInput
         label="Select State"
         placeholder="Enter your state"
@@ -133,7 +133,7 @@ const SearchBar = (props) => {
       <Button
         label="Find Leads"
         icon={<SearchIcon />}
-        onClick={()=>handleSubmit()}
+        onClick={() => handleSubmit()}
       />
     </div>
   );
