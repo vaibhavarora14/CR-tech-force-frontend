@@ -20,6 +20,7 @@ const SearchBar = (props) => {
   const [selectedCity, setSelectedCity] = useState(state.searchInputs ? state.searchInputs.city : '');
   const [selectedRequirement, setSelectedRequirement] = useState(state.searchInputs ? state.searchInputs.requirement : '');
   const [cities, setCities] = useState([]);
+  const [firstClick, setFirstClick] = useState(false);
 
   const states = statesCitiesData.map((state) => state.state);
 
@@ -56,11 +57,15 @@ const SearchBar = (props) => {
     const {
       location: { pathname },
     } = history;
+    setFirstClick(true);
     const searchQuery = {
       state: selectedState.trim(),
       city: selectedCity.trim(),
       requirement: selectedRequirement.trim(),
     };
+    if(!isValidSearchQuery(searchQuery)){
+      return;
+    }
     searchInputs(searchQuery);
 
     if (props.onSubmit && isValidSearchQuery(searchQuery)) {
@@ -78,6 +83,8 @@ const SearchBar = (props) => {
         value={selectedState}
         options={states}
         onChange={handleStateChange}
+        firstClick={firstClick}
+        errorMsg="Please enter your state!"
       />
       <SelectInput
         label="Select City / Region"
@@ -85,6 +92,8 @@ const SearchBar = (props) => {
         value={selectedCity}
         options={cities}
         onChange={handleCityChange}
+        firstClick={firstClick}
+        errorMsg="Please enter your city!"
       />
       <SelectInput
         label="What are your looking for"
@@ -92,12 +101,13 @@ const SearchBar = (props) => {
         value={selectedRequirement}
         options={requirements}
         onChange={handleRequirementChange}
+        firstClick={firstClick}
+        errorMsg="Please enter what you are looking for!"
       />
       <Button
-        disabled={!selectedState && !selectedCity && !selectedRequirement}
         label="Find Leads"
         icon={<SearchIcon />}
-        onClick={handleSubmit}
+        onClick={()=>handleSubmit()}
       />
     </div>
   );
