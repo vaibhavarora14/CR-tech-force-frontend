@@ -657,7 +657,8 @@ const resourceTypes = [
     'Blood',
     'Home Care',
     'Testing',
-    'Food / Tiffin'
+    'Food / Tiffin',
+    'Ambulances'
 ];
 
 const resourceSubtypes = {
@@ -684,6 +685,9 @@ const resourceSubtypes = {
     'Food / Tiffin': [
         'Tiffin Service', 'Meal Provider'
     ],
+    'Ambulances': [
+        'Normal / Advanced Life Support'
+    ]
 }
 
 
