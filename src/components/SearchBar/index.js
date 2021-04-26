@@ -102,7 +102,7 @@ const SearchBar = (props) => {
         options={requirements}
         onChange={handleRequirementChange}
         firstClick={firstClick}
-        errorMsg="Please enter what you are looking for!"
+        errorMsg="Please enter what are your looking for!"
       />
       <Button
         label="Find Leads"
