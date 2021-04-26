@@ -57,7 +57,7 @@ const PopularCities = (props) => {
     const searchQuery = {
       state,
       city,
-      requirement: requirements[0],
+      requirement: requirements[1],
     };
     searchInputs(searchQuery);
     history.push(ROUTES.SEARCH);
