@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
     container: {
         display: 'flex',
         flexDirection: 'column',
+        marginBottom: '1.5rem'
     },
     root: {
         minWidth: theme.spacing(37.25),
