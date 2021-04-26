@@ -1,7 +1,7 @@
 import { useLazyQuery } from '@apollo/client';
 import { Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import SearchBar from '../../components/SearchBar';
@@ -30,6 +30,7 @@ function SearchPage() {
     return `"${filter}"`
   }
 
+
   const [executeSearch, { loading, called }] = useLazyQuery(GET_SEARCH(getFilter()), {
     onCompleted: (data) => {
       setCurrentData(data?.workspace?.tickets?.edges || [])
@@ -38,6 +39,11 @@ function SearchPage() {
     }
   });
 
+  useEffect(() => {
+    if (state?.searchInputs?.state && state?.searchInputs?.city && state?.searchInputs?.requirement) {
+      executeSearch();
+    }
+  }, [state]);
 
   return (
     <div>

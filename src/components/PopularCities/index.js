@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { withRouter } from 'react-router';
+import { requirements } from '../../constants';
+import statesCitiesData from '../../utils/state-city-map';
 import Button from '../Button';
 
 import ROUTES from './../../constants/routes';
@@ -7,29 +9,56 @@ import ROUTES from './../../constants/routes';
 import { Context as SearchContext } from './../../context/SearchContext';
 import './PopularCities.scss';
 
-const popularCities = [
-  'Delhi',
-  'Noida',
-  'Gurgaon',
-  'Bangalore',
-  'Hyderabad',
-  'Chennai',
-  'Mumbai',
-];
+const popularStateCity = [
+  {
+    state: 'Delhi (National Capital Territory)',
+    city: 'Delhi'
+  },
+  {
+    state: 'Uttar Pradesh',
+    city: 'Noida'
+  },
+  {
+    state: 'Haryana',
+    city: 'Gurgaon'
+  },
+  {
+    state: 'Karnataka',
+    city: 'Bangalore'
+  },
+  {
+    state: 'Telangana',
+    city: 'Hyderabad'
+  },
+  {
+    state: 'Tamil Nadu',
+    city: 'Chennai'
+  },
+  {
+    state: 'Maharashtra',
+    city: 'Mumbai'
+  }
+]
 
 const PopularCities = (props) => {
   const { searchInputs } = useContext(SearchContext);
   const { history } = props;
 
-  const cityButtons = popularCities.map((city) => (
-    <Button variant='text' style={{marginRight: '8px', marginBottom: '8px'}} key={city} label={city} onClick={() => handleSubmit(city)} />
+  const cityButtons = popularStateCity.map(({ state, city }) => (
+    <Button
+      variant='text'
+      style={{ marginRight: '8px', marginBottom: '8px' }}
+      key={city}
+      label={city}
+      onClick={() => handleSubmit(city, state)}
+    />
   ));
 
-  const handleSubmit = (city) => {
+  const handleSubmit = (city, state) => {
     const searchQuery = {
-      state: '',
+      state,
       city,
-      requirement: '',
+      requirement: requirements[0],
     };
     searchInputs(searchQuery);
     history.push(ROUTES.SEARCH);

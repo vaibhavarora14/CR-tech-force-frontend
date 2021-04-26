@@ -535,6 +535,7 @@ const statesCitiesData = [{
       'Mirzapur-Vindhyachal',
       'Moradabad',
       'Muzaffarnagar',
+      'Noida',
       'Partapgarh',
       'Pilibhit',
       'Prayagraj',
