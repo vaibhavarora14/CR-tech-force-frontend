@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+/* eslint-disable/ */
+import React, { useState, useContext, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -21,7 +22,29 @@ const SearchBar = (props) => {
   const [selectedRequirement, setSelectedRequirement] = useState(state.searchInputs ? state.searchInputs.requirement : '');
   const [cities, setCities] = useState([]);
 
+  useEffect(() => {
+    if (state && state.searchInputs) {
+      setSelectedState(selectedState);
+      setSelectedCity(selectedCity);
+      const selectedStatData = statesCitiesData.find(
+        (state) => state.state === selectedState
+      );
+
+      const citiesData =
+        !!selectedStatData &&
+          !!selectedStatData.cities &&
+          selectedStatData.cities.length > 0
+          ? selectedStatData.cities
+          : [];
+
+      setCities(citiesData);
+    }
+      
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const states = statesCitiesData.map((state) => state.state);
+  
 
   const handleStateChange = (selectedState) => {
     setSelectedState(selectedState);
@@ -39,6 +62,9 @@ const SearchBar = (props) => {
 
     setCities(citiesData);
   };
+
+
+  
 
   const handleCityChange = (selectedCity) => {
     setSelectedCity(selectedCity);
