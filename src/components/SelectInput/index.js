@@ -3,10 +3,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import React from 'react';
 import './SelectInput.scss';
-
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -46,9 +44,6 @@ const SelectInput = ({ label, placeholder, options, value, onChange, firstClick,
           onChange={(event) => onChange(event.target.value)}
           displayEmpty
           className={classes.selectEmpty}
-          IconComponent={() => (
-            <KeyboardArrowDownIcon style={{ color: '#bbb' }} />
-          )}
           MenuProps={{
             anchorOrigin: {
               vertical: 'bottom',
