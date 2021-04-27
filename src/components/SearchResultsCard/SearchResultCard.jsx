@@ -174,7 +174,7 @@ const SearchResultCard = (props) => {
   });
 
   const copyInfo = () => {
-    const lastVerifiedText = `Last Verified: ${dayjs(lastVerified).fromNow()}`;
+    const lastVerifiedText = `Last Verified: ${getVerifiedText(lastVerified)}`;
     const phoneNumberText = `Phone Number - ${phone}`;
     const addressText = `Address - ${location}`;
     const detailsText = `Other details - ${details}`;
@@ -200,6 +200,14 @@ const SearchResultCard = (props) => {
     setDialogOpen(true);
   };
 
+  const getVerifiedText = (lastVerified) => {
+    if (!Number.isNaN(lastVerified)) {
+      return dayjs(Number(lastVerified)).fromNow();
+    }
+
+    return dayjs(lastVerified).fromNow();
+  };
+
   return (
     <div className={`${classes.container} ${props.className || ""}`}>
       <Card variant="outlined" className={classes.root}>
@@ -209,7 +217,7 @@ const SearchResultCard = (props) => {
             <GreenTick />
           </div>
           <Typography style={{ opacity: 0.7 }} variant="body2">
-            Last Verified: {dayjs(lastVerified).fromNow()}
+            Last Verified: {getVerifiedText(lastVerified)}
           </Typography>
         </div>
 
