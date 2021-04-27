@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import MaterialUIButton from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import ReactGA from 'react-ga'
 
 import './Button.scss';
 
@@ -14,8 +15,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Button = ({ style, variant, icon, disabled = false, label, onClick = () => {} }) => {
+const Button = ({ style, name, variant, icon, disabled = false, label, onClick = () => { } }) => {
   const classes = useStyles();
+
+  const handleOnClick = (event) => {
+    if (name) {
+      ReactGA.event({
+        category: name,
+        transport: 'beacon'
+      })
+    }
+    onClick(event);
+  }
 
   return (
     <MaterialUIButton
@@ -24,11 +35,11 @@ const Button = ({ style, variant, icon, disabled = false, label, onClick = () =>
       disabled={disabled}
       size="large"
       style={style}
-      className={clsx(classes.button, variant ? 'Button' :'Button linear-gradient')}
+      className={clsx(classes.button, variant ? 'Button' : 'Button linear-gradient')}
       startIcon={icon}
-      onClick={onClick}
+      onClick={handleOnClick}
     >
-      <span style={{textDecoration: variant ? 'underline': 'none'}}>
+      <span style={{ textDecoration: variant ? 'underline' : 'none' }}>
         {label}
       </span>
     </MaterialUIButton>

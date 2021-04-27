@@ -21,20 +21,13 @@ function SearchPage() {
   }
 
   const getFilter = () => {
-    let filter = "";
-    if (state?.searchInputs?.state) {
-      filter += `custom_string:'${state?.searchInputs?.state}'`;
-    }
-
-    if (state?.searchInputs?.city) {
-      filter += `${filter.length > 0 ? ' AND ' : ''}custom_string:'${state?.searchInputs?.city}'`;
-    }
-
-    if (state?.searchInputs?.requirement) {
-      filter += `${filter.length > 0 ? ' AND ' : ''}custom_string:'${state?.searchInputs?.requirement}'`;
-    }
-
-    return `"${filter}"`
+    let filter = {
+      ...(state?.searchInputs?.state && { state: `"${state?.searchInputs?.state}"` }),
+      ...(state?.searchInputs?.city && { city: `"${state?.searchInputs?.city}"` }),
+      ...(state?.searchInputs?.requirement && { resourceType: `"${state?.searchInputs?.requirement}"` }),
+    };
+    
+    return filter
   }
 
 
@@ -127,29 +120,29 @@ function SearchPage() {
   );
 }
 
-const GET_SEARCH = (filter: string) => gql`
-    query {
-        workspace {
-          tickets(filter: ${filter}) {
-            edges {
-              node {
-                ticketId
-                supplierDonorName
-                supplierDonorContactNumber
-                city
-                state
-                costPerUnit
-                availableUnits
-                upvoteCount
-                resourceName
-                updatedAt
-                address
-                otherInfo
+const GET_SEARCH = (filter: any) => gql`
+      query {
+          workspace {
+            tickets(city: ${filter?.city},state: ${filter?.state}, resourceType: ${filter?.resourceType} ) {
+              edges {
+                node {
+                  ticketId
+                  supplierDonorName
+                  supplierDonorContactNumber
+                  city
+                  state
+                  costPerUnit
+                  availableUnits
+                  upvoteCount
+                  resourceName
+                  updatedAt
+                  address
+                  otherInfo
+                }
               }
             }
           }
         }
-      }
-    `;
+      `;
 
 export default SearchPage;
