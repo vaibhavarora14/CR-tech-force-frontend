@@ -46,6 +46,7 @@ const PopularCities = (props) => {
   const cityButtons = popularStateCity.map(({ state, city }) => (
     <Button
       variant='text'
+      name="Popular cities"
       style={{ marginRight: '8px', marginBottom: '8px' }}
       key={city}
       label={city}

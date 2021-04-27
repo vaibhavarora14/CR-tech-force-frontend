@@ -73,9 +73,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CHANGE_VOTE_COUNT = gql`
-  mutation($ticketId: String, $value: String) {
-    changeVoteCount(input: { ticketId: $ticketId, value: $value }) {
+const UPVOTE_COUNT = gql`
+  mutation($ticketId: String) {
+    upvoteTicket(input: { ticketId: $ticketId }) {
+      status
+      message
+    }
+  }
+`;
+
+const DOWNVOTE_COUNT = gql`
+  mutation($ticketId: String) {
+    downvoteTicket(input: { ticketId: $ticketId }) {
       status
       message
     }
@@ -110,20 +119,18 @@ const SearchResultCard = (props) => {
   const [allowUpvote, setAllowUpvote] = useState(true);
   const [allowDownvote, setAllowDownvote] = useState(true);
 
-  const [upvoteTicket] = useMutation(CHANGE_VOTE_COUNT, {
+  const [upvoteTicket] = useMutation(UPVOTE_COUNT, {
     variables: {
       ticketId,
-      value: `${thumbsUpcount + 1}`,
     },
     update(proxy, result) {
-      console.log(result);
       if (
         result &&
         result.data &&
-        result.data.changeVoteCount &&
-        result.data.changeVoteCount.status === "200"
+        result.data.upvoteTicket &&
+        result.data.upvoteTicket.status === "200"
       ) {
-        setUpvote(thumbsUpcount + 1);
+        setUpvote(upvote + 1);
         setAllowDownvote(true);
         setAllowUpvote(false);
       } else {
@@ -137,20 +144,18 @@ const SearchResultCard = (props) => {
     },
   });
 
-  const [downvoteTicket] = useMutation(CHANGE_VOTE_COUNT, {
+  const [downvoteTicket] = useMutation(DOWNVOTE_COUNT, {
     variables: {
       ticketId,
-      value: `${upvote - 1 > -1 ? upvote - 1 : 0}`,
     },
     update(proxy, result) {
-      console.log(result);
       if (
         result &&
         result.data &&
-        result.data.changeVoteCount &&
-        result.data.changeVoteCount.status === "200"
+        result.data.downvoteTicket &&
+        result.data.downvoteTicket.status === "200"
       ) {
-        setUpvote(upvote - 1 > -1 ? upvote - 1 : 0);
+        setUpvote(upvote - 1);
         setAllowDownvote(false);
         setAllowUpvote(true);
       } else {
@@ -165,7 +170,7 @@ const SearchResultCard = (props) => {
   });
 
   const copyInfo = () => {
-    const lastVerifiedText = `Last Verified: ${dayjs(lastVerified).fromNow()}`;
+    const lastVerifiedText = `Last Verified: ${getVerifiedText(lastVerified)}`;
     const phoneNumberText = `Phone Number - ${phone}`;
     const addressText = `Address - ${location}`;
     const detailsText = `Other details - ${details}`;
@@ -191,6 +196,14 @@ const SearchResultCard = (props) => {
     setDialogOpen(true);
   };
 
+  const getVerifiedText = (lastVerified) => {
+    if (!Number.isNaN(lastVerified)) {
+      return dayjs(Number(lastVerified)).fromNow();
+    }
+
+    return dayjs(lastVerified).fromNow();
+  };
+
   return (
     <div className={`${classes.container} ${props.className || ""}`}>
       <Card variant="outlined" className={classes.root}>
@@ -200,7 +213,7 @@ const SearchResultCard = (props) => {
             <GreenTick />
           </div>
           <Typography style={{ opacity: 0.7 }} variant="body2">
-            Last Verified: {dayjs(lastVerified).fromNow()}
+            Last Verified: {getVerifiedText(lastVerified)}
           </Typography>
         </div>
 
