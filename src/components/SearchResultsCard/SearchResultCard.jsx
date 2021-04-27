@@ -78,7 +78,6 @@ const UPVOTE_COUNT = gql`
     upvoteTicket(input: { ticketId: $ticketId }) {
       status
       message
-      upvoteCount
     }
   }
 `;
@@ -88,7 +87,6 @@ const DOWNVOTE_COUNT = gql`
     downvoteTicket(input: { ticketId: $ticketId }) {
       status
       message
-      upvoteCount
     }
   }
 `;
@@ -130,10 +128,9 @@ const SearchResultCard = (props) => {
         result &&
         result.data &&
         result.data.upvoteTicket &&
-        result.data.upvoteTicket.status === "200" &&
-        result.data.upvoteTicket.upvoteCount
+        result.data.upvoteTicket.status === "200"
       ) {
-        setUpvote(result.data.upvoteTicket.upvoteCount);
+        setUpvote(upvote + 1);
         setAllowDownvote(true);
         setAllowUpvote(false);
       } else {
@@ -156,10 +153,9 @@ const SearchResultCard = (props) => {
         result &&
         result.data &&
         result.data.downvoteTicket &&
-        result.data.downvoteTicket.status === "200" &&
-        result.data.downvoteTicket.upvoteCount
+        result.data.downvoteTicket.status === "200"
       ) {
-        setUpvote(result.data.downvoteTicket.upvoteCount);
+        setUpvote(upvote - 1);
         setAllowDownvote(false);
         setAllowUpvote(true);
       } else {
