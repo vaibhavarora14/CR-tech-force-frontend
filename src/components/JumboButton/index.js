@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import ReactGA from 'react-ga'
 
 import './JumboButton.scss';
 
@@ -14,9 +15,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const JumboButton = ({ altText, iconSrc, primaryText, secondaryText, onClick }) => {
+const JumboButton = ({ altText, iconSrc, primaryText, secondaryText, onClick = () => { }, name }) => {
   const classes = useStyles();
   const btnImg = <img alt={altText} src={iconSrc} />;
+
+  const handleOnClick = (event) => {
+    if (name) {
+      ReactGA.event({
+        category: name,
+        transport: 'beacon'
+      })
+    }
+    onClick(event);
+  }
 
   return (
     <Button

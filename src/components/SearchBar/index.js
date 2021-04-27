@@ -106,7 +106,7 @@ const SearchBar = (props) => {
       <SelectInput
         label="Select State"
         placeholder="Enter your state"
-        value={selectedState}
+        value={selectedState || ''}
         options={states}
         onChange={handleStateChange}
         firstClick={firstClick}
@@ -114,7 +114,7 @@ const SearchBar = (props) => {
       <SelectInput
         label="Select City / Region"
         placeholder="Enter your city"
-        value={selectedCity}
+        value={selectedCity || ''}
         options={cities}
         onChange={handleCityChange}
         firstClick={firstClick}
@@ -122,7 +122,7 @@ const SearchBar = (props) => {
       <SelectInput
         label="What are you're looking for"
         placeholder="eg. ICU Beds, Oxygen"
-        value={selectedRequirement}
+        value={selectedRequirement || ''}
         options={requirements}
         onChange={handleRequirementChange}
         firstClick={firstClick}
@@ -130,6 +130,7 @@ const SearchBar = (props) => {
       <Button
         label="Find Leads"
         icon={<SearchIcon />}
+        name="Search leads"
         onClick={() => handleSubmit()}
       />
     </div>
