@@ -130,6 +130,7 @@ const SearchBar = (props) => {
       <Button
         label="Find Leads"
         icon={<SearchIcon />}
+        name="Search leads"
         onClick={() => handleSubmit()}
       />
     </div>
