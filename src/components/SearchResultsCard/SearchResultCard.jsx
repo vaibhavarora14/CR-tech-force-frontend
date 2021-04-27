@@ -73,11 +73,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CHANGE_VOTE_COUNT = gql`
-  mutation($ticketId: String, $value: String) {
-    changeVoteCount(input: { ticketId: $ticketId, value: $value }) {
+const UPVOTE_COUNT = gql`
+  mutation($ticketId: String) {
+    changeVoteCount(input: { ticketId: $ticketId }) {
       status
       message
+      upvoteCount
+    }
+  }
+`;
+
+const DOWNVOTE_COUNT = gql`
+  mutation($ticketId: String) {
+    changeVoteCount(input: { ticketId: $ticketId }) {
+      status
+      message
+      upvoteCount
     }
   }
 `;
@@ -110,20 +121,19 @@ const SearchResultCard = (props) => {
   const [allowUpvote, setAllowUpvote] = useState(true);
   const [allowDownvote, setAllowDownvote] = useState(true);
 
-  const [upvoteTicket] = useMutation(CHANGE_VOTE_COUNT, {
+  const [upvoteTicket] = useMutation(UPVOTE_COUNT, {
     variables: {
       ticketId,
-      value: `${thumbsUpcount + 1}`,
     },
     update(proxy, result) {
-      console.log(result);
       if (
         result &&
         result.data &&
-        result.data.changeVoteCount &&
-        result.data.changeVoteCount.status === "200"
+        result.data.upvoteTicket &&
+        result.data.upvoteTicket.status === "200" &&
+        result.data.upvoteTicket.upvoteCount
       ) {
-        setUpvote(thumbsUpcount + 1);
+        setUpvote(result.data.upvoteTicket.upvoteCount);
         setAllowDownvote(true);
         setAllowUpvote(false);
       } else {
@@ -137,20 +147,19 @@ const SearchResultCard = (props) => {
     },
   });
 
-  const [downvoteTicket] = useMutation(CHANGE_VOTE_COUNT, {
+  const [downvoteTicket] = useMutation(DOWNVOTE_COUNT, {
     variables: {
       ticketId,
-      value: `${upvote - 1 > -1 ? upvote - 1 : 0}`,
     },
     update(proxy, result) {
-      console.log(result);
       if (
         result &&
         result.data &&
-        result.data.changeVoteCount &&
-        result.data.changeVoteCount.status === "200"
+        result.data.downvoteTicket &&
+        result.data.downvoteTicket.status === "200" &&
+        result.data.downvoteTicket.upvoteCount
       ) {
-        setUpvote(upvote - 1 > -1 ? upvote - 1 : 0);
+        setUpvote(result.data.downvoteTicket.upvoteCount);
         setAllowDownvote(false);
         setAllowUpvote(true);
       } else {
