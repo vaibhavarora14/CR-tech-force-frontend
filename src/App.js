@@ -14,6 +14,9 @@ import { Provider as SearchProvider } from './context/SearchContext';
 import SocialLinks from './components/SocialLinks';
 import ScrollToTop from './components/ScrollToTop';
 import ApolloLinkTimeout from 'apollo-link-timeout';
+import { useEffect } from 'react';
+import { initGA } from '.';
+import TrackPageView from './components/TrackPageView';
 
 
 const timeoutLink = new ApolloLinkTimeout(15000);
@@ -62,6 +65,10 @@ const theme = createMuiTheme({
 
 
 function App() {
+  useEffect(() => {
+    initGA();
+  }, [])
+
   return (
     <ApolloProvider client={client}>
       <SearchProvider>
@@ -69,6 +76,7 @@ function App() {
           <div className="App">
             <BrowserRouter>
               <ScrollToTop />
+              <TrackPageView />
               <ThemeProvider theme={theme}>
                 <Header />
                 <div className="container">
